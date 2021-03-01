@@ -8,6 +8,10 @@ def given_ask_name(mock_input, name):
     mock_input.return_value = name
 
 
+def question_should_be(mock_input, question_sentence):
+    mock_input.assert_called_with(question_sentence)
+
+
 class MyTestCase(unittest.TestCase):
 
     def setUp(self):
@@ -16,14 +20,17 @@ class MyTestCase(unittest.TestCase):
     @patch("builtins.input")
     def test_ask_name_to_tony(self, mock_input):
         given_ask_name(mock_input, "Tony")
-        self.assertEqual("Tony", self.robot.ask_name())
-        mock_input.assert_called_with("What is your name? ")
+        self.name_shoule_be("Tony")
+        question_should_be(mock_input, "What is your name? ")
+
+    def name_shoule_be(self, name_of_target):
+        self.assertEqual(name_of_target, self.robot.ask_name())
 
     @patch("builtins.input")
     def test_ask_name_to_stark(self, mock_input):
         given_ask_name(mock_input, "Stark")
-        self.assertEqual("Stark", self.robot.ask_name())
-        mock_input.assert_called_with("What is your name? ")
+        self.name_shoule_be("Stark")
+        question_should_be(mock_input, "What is your name? ")
 
 
 if __name__ == '__main__':
