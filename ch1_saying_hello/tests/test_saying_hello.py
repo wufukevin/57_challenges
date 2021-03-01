@@ -32,6 +32,13 @@ class MyTestCase(unittest.TestCase):
         self.name_shoule_be("Stark")
         question_should_be(mock_input, "What is your name? ")
 
+    def test_say_hello_to_stark(self, mock_input):
+        given_ask_name(mock_input, "Stark")
+        self.name_shoule_be("Stark")
+        question_should_be(mock_input, "What is your name? ")
+        sentence = self.robot.generate_hello_sentence("Stark")
+        self.assertEqual("Hello, Stark, nice to meet you!", sentence)
+
 
 if __name__ == '__main__':
     unittest.main()
