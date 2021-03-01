@@ -1,16 +1,7 @@
 import unittest
-from unittest.mock import Mock, patch
+from unittest.mock import patch
 
-
-class CharacterCounter(object):
-    def __init__(self):
-        self.word = None
-
-    def ask_input(self):
-        self.word = input("What is the input string?")
-
-    def count_result(self):
-        return self.word + " has " + str(len(self.word)) + " characters."
+from ch2_counting_characters.character_counter import CharacterCounter
 
 
 class MyTestCase(unittest.TestCase):
@@ -29,6 +20,14 @@ class MyTestCase(unittest.TestCase):
         counter.ask_input()
         self.assertEqual("Python", counter.word)
         self.assertEqual("Python has 6 characters.", counter.count_result())
+
+    @patch("builtins.input")
+    def test_count_empty(self, mock_input):
+        mock_input.return_value = ""
+        counter = CharacterCounter()
+        counter.ask_input()
+        self.assertEqual("", counter.word)
+        self.assertEqual("No input detected!", counter.count_result())
 
 
 if __name__ == '__main__':
