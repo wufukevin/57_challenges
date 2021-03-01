@@ -33,20 +33,26 @@ class MyTestCase(unittest.TestCase):
         question_should_be(mock_input, "What is your name? ")
 
     @patch("builtins.input")
-    def test_say_hello_to_stark(self, mock_input):
+    @patch("builtins.print")
+    def test_say_hello_to_stark(self, mock_input, mock_print):
         given_ask_name(mock_input, "Stark")
         self.name_shoule_be("Stark")
         question_should_be(mock_input, "What is your name? ")
         hello_sentence = self.robot.generate_hello_sentence("Stark")
         self.hello_sentence_should_be(hello_sentence, "Hello, Stark, nice to meet you!")
+        self.robot.say_hello_to("Stark")
+        mock_print.assert_called_with(hello_sentence)
 
     @patch("builtins.input")
-    def test_say_hello_to_tony(self, mock_input):
+    @patch("builtins.print")
+    def test_say_hello_to_tony(self, mock_input, mock_print):
         given_ask_name(mock_input, "Tony")
         self.name_shoule_be("Tony")
         question_should_be(mock_input, "What is your name? ")
         hello_sentence = self.robot.generate_hello_sentence("Tony")
         self.hello_sentence_should_be(hello_sentence, "Hello, Tony, nice to meet you!")
+        self.robot.say_hello_to("Tony")
+        mock_print.assert_called_with(hello_sentence)
 
     def hello_sentence_should_be(self, sentence, expected):
         self.assertEqual(expected, sentence)
