@@ -22,6 +22,12 @@ class MyTestCase(unittest.TestCase):
         self.simple_math.ask_two_numbers()
         self.input_should_be("1", "2")
 
+    @patch("builtins.input")
+    def test_ask_input_not_numbers(self, mock_input):
+        mock_input.side_effect = ["a", "2"]
+        with self.assertRaises(Exception):
+            self.simple_math.ask_two_numbers()
+
     def input_should_be(self, first, second):
         self.assertEqual(first, self.simple_math.first_input)
         self.assertEqual(second, self.simple_math.second_input)
