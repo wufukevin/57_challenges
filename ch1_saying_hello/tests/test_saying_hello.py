@@ -12,6 +12,10 @@ def question_should_be(mock_input, question_sentence):
     mock_input.assert_called_with(question_sentence)
 
 
+def should_say_hello_sentence(hello_sentence, mock_print):
+    mock_print.assert_called_with(hello_sentence)
+
+
 class MyTestCase(unittest.TestCase):
 
     def setUp(self):
@@ -41,7 +45,7 @@ class MyTestCase(unittest.TestCase):
         hello_sentence = self.robot.generate_hello_sentence("Stark")
         self.hello_sentence_should_be(hello_sentence, "Hello, Stark, nice to meet you!")
         self.robot.say_hello_to("Stark")
-        mock_print.assert_called_with(hello_sentence)
+        should_say_hello_sentence(hello_sentence, mock_print)
 
     @patch("builtins.print")
     @patch("builtins.input")
@@ -52,7 +56,7 @@ class MyTestCase(unittest.TestCase):
         hello_sentence = self.robot.generate_hello_sentence("Tony")
         self.hello_sentence_should_be(hello_sentence, "Hello, Tony, nice to meet you!")
         self.robot.say_hello_to("Tony")
-        mock_print.assert_called_with(hello_sentence)
+        should_say_hello_sentence(hello_sentence, mock_print)
 
     def hello_sentence_should_be(self, sentence, expected):
         self.assertEqual(expected, sentence)
