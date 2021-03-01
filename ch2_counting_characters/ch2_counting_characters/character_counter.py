@@ -6,4 +6,6 @@ class CharacterCounter(object):
         self.word = input("What is the input string?")
 
     def count_result(self):
+        if len(self.word) == 0:
+            return 'No input detected!'
         return self.word + " has " + str(len(self.word)) + " characters."
