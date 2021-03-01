@@ -16,14 +16,9 @@ def getNumber():
     else:
         bill_warning.configure(text='Please enter a valid number')
 
-    tipRate_get = tip_entry.get()
-    if tipRate_get.isdigit():
-        tipRate = float(tipRate_get)
-        tip_warning.configure(text='')
-    else:
-        tip_warning.configure(text='Please enter a valid number')
-    
-    if bill_get.isdigit() and tipRate_get.isdigit():
+    tipRate = tip_enter.get()
+
+    if bill_get.isdigit():
         tip = bill*tipRate/100
         allBill = tip+bill
         # 將計算結果更新到 result_label 文字內容
@@ -32,7 +27,14 @@ def getNumber():
 
     window.after(1000, getNumber)
 
-
+'''
+    tipRate_get = tip_entry.get()
+    if tipRate_get.isdigit():
+        tipRate = float(tipRate_get)
+        tip_warning.configure(text='')
+    else:
+        tip_warning.configure(text='Please enter a valid number')
+'''
 
 # 將元件分為 bill/tip 兩群並加入主視窗
 bill_frame = tk.Frame(window)
@@ -48,11 +50,14 @@ tip_frame = tk.Frame(window)
 tip_frame.pack(side=tk.TOP)
 tip_label = tk.Label(tip_frame, text='What is the tip percentage ? ')
 tip_label.pack(side=tk.LEFT)
+tip_enter = tk.Scale(tip_frame, from_=5, to=20, tickinterval=5, resolution=0.1, orient="horizontal")
+tip_enter.pack()
+'''
 tip_entry = tk.Entry(tip_frame)
 tip_entry.pack(side=tk.LEFT)
 tip_warning = tk.Label(tip_frame)
 tip_warning.pack(side=tk.LEFT)
-
+'''
 tipResult_frame = tk.Frame(window)
 tipResult_frame.pack(side=tk.TOP)
 tipResult_label_1 = tk.Label(tipResult_frame, text='The tip is $')
@@ -67,8 +72,6 @@ total_label_1.pack(side=tk.LEFT)
 total_label_2 = tk.Label(total_frame)
 total_label_2.pack(side=tk.LEFT)
 
-calculate_btn = tk.Button(window, text='馬上計算', command=getNumber)
-calculate_btn.pack()
 
 getNumber()
 window.mainloop()
