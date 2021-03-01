@@ -15,6 +15,11 @@ class MyTestCase(unittest.TestCase):
         counter.ask_input()
         self.assertEqual("Homer has 5 characters.", counter.count_result())
 
+    def test_count_python(self):
+        counter = CharacterCounter()
+        counter.ask_input()
+        self.assertEqual("Python has 6 characters.", counter.count_result())
+
 
 if __name__ == '__main__':
     unittest.main()
