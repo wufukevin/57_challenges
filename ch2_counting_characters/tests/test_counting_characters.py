@@ -4,30 +4,40 @@ from unittest.mock import patch
 from ch2_counting_characters.character_counter import CharacterCounter
 
 
+def given_input_word(mock_input, input_word):
+    mock_input.return_value = input_word
+
+
 class MyTestCase(unittest.TestCase):
+    def setUp(self):
+        self.counter = CharacterCounter()
+
     @patch("builtins.input")
     def test_count_homer(self, mock_input):
-        mock_input.return_value = "Homer"
-        counter = CharacterCounter()
-        counter.ask_input()
-        self.assertEqual("Homer", counter.word)
-        self.assertEqual("Homer has 5 characters.", counter.count_result())
+        given_input_word(mock_input, "Homer")
+        self.counter.ask_input()
+        self.input_word_should_be("Homer")
+        self.count_result_should_be("Homer has 5 characters.")
+
+    def count_result_should_be(self, result):
+        self.assertEqual(result, self.counter.count_result())
 
     @patch("builtins.input")
     def test_count_python(self, mock_input):
-        mock_input.return_value = "Python"
-        counter = CharacterCounter()
-        counter.ask_input()
-        self.assertEqual("Python", counter.word)
-        self.assertEqual("Python has 6 characters.", counter.count_result())
+        given_input_word(mock_input, "Python")
+        self.counter.ask_input()
+        self.input_word_should_be("Python")
+        self.count_result_should_be("Python has 6 characters.")
 
     @patch("builtins.input")
     def test_count_empty(self, mock_input):
-        mock_input.return_value = ""
-        counter = CharacterCounter()
-        counter.ask_input()
-        self.assertEqual("", counter.word)
-        self.assertEqual("No input detected!", counter.count_result())
+        given_input_word(mock_input, "")
+        self.counter.ask_input()
+        self.input_word_should_be("")
+        self.count_result_should_be("No input detected!")
+
+    def input_word_should_be(self, expected):
+        self.assertEqual(expected, self.counter.word)
 
 
 if __name__ == '__main__':
