@@ -13,13 +13,18 @@ class SimpleMath(object):
 
 
 class MyTestCase(unittest.TestCase):
+    def setUp(self):
+        self.simple_math = SimpleMath()
+
     @patch("builtins.input")
     def test_ask_input_two_numbers(self, mock_input):
         mock_input.side_effect = ["1", "2"]
-        simple_math = SimpleMath()
-        simple_math.ask_two_numbers()
-        self.assertEqual("1", simple_math.first_input)
-        self.assertEqual("2", simple_math.second_input)
+        self.simple_math.ask_two_numbers()
+        self.input_should_be("1", "2")
+
+    def input_should_be(self, first, second):
+        self.assertEqual(first, self.simple_math.first_input)
+        self.assertEqual(second, self.simple_math.second_input)
 
 
 if __name__ == '__main__':
