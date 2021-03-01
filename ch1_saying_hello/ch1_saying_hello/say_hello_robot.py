@@ -4,3 +4,6 @@ class SayHelloRobot(object):
 
     def generate_hello_sentence(self, name):
         return "Hello, " + name + ", nice to meet you!"
+
+    def say_hello_to(self, name):
+        print(self.generate_hello_sentence(name))

@@ -32,8 +32,8 @@ class MyTestCase(unittest.TestCase):
         self.name_shoule_be("Stark")
         question_should_be(mock_input, "What is your name? ")
 
-    @patch("builtins.input")
     @patch("builtins.print")
+    @patch("builtins.input")
     def test_say_hello_to_stark(self, mock_input, mock_print):
         given_ask_name(mock_input, "Stark")
         self.name_shoule_be("Stark")
@@ -43,8 +43,8 @@ class MyTestCase(unittest.TestCase):
         self.robot.say_hello_to("Stark")
         mock_print.assert_called_with(hello_sentence)
 
-    @patch("builtins.input")
     @patch("builtins.print")
+    @patch("builtins.input")
     def test_say_hello_to_tony(self, mock_input, mock_print):
         given_ask_name(mock_input, "Tony")
         self.name_shoule_be("Tony")
