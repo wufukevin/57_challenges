@@ -7,3 +7,9 @@ class SayHelloRobot(object):
 
     def say_hello_to(self, name):
         print(self.generate_hello_sentence(name))
+
+
+if __name__ == '__main__':
+    robot = SayHelloRobot()
+    name = robot.ask_name()
+    robot.say_hello_to(name)
