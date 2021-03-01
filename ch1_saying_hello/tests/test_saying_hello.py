@@ -32,6 +32,7 @@ class MyTestCase(unittest.TestCase):
         self.name_shoule_be("Stark")
         question_should_be(mock_input, "What is your name? ")
 
+    @patch("builtins.input")
     def test_say_hello_to_stark(self, mock_input):
         given_ask_name(mock_input, "Stark")
         self.name_shoule_be("Stark")
