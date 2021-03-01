@@ -40,6 +40,14 @@ class MyTestCase(unittest.TestCase):
         hello_sentence = self.robot.generate_hello_sentence("Stark")
         self.hello_sentence_should_be(hello_sentence, "Hello, Stark, nice to meet you!")
 
+    @patch("builtins.input")
+    def test_say_hello_to_tony(self, mock_input):
+        given_ask_name(mock_input, "Tony")
+        self.name_shoule_be("Tony")
+        question_should_be(mock_input, "What is your name? ")
+        hello_sentence = self.robot.generate_hello_sentence("Tony")
+        self.hello_sentence_should_be(hello_sentence, "Hello, Tony, nice to meet you!")
+
     def hello_sentence_should_be(self, sentence, expected):
         self.assertEqual(expected, sentence)
 
