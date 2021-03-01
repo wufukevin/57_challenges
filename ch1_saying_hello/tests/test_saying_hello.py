@@ -3,15 +3,18 @@ import unittest
 
 class SayHelloRobot(object):
     def ask_name(self):
-        return "Tony Stark"
+        return "Tony"
 
 
 class MyTestCase(unittest.TestCase):
 
-    def test_ask_name(self):
+    def test_ask_name_to_tony(self):
         robot = SayHelloRobot()
-        name = robot.ask_name()
-        self.assertEqual("Tony Stark", name)
+        self.assertEqual("Tony", robot.ask_name())
+
+    def test_ask_name_to_stark(self):
+        robot = SayHelloRobot()
+        self.assertEqual("Stark", robot.ask_name())
 
 
 if __name__ == '__main__':
