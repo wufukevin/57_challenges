@@ -1,6 +1,11 @@
 import unittest
 
 
+class SayHelloRobot(object):
+    def ask_name(self):
+        return "Tony Stark"
+
+
 class MyTestCase(unittest.TestCase):
 
     def test_ask_name(self):
