@@ -19,3 +19,9 @@ class SimpleMath(object):
         multiply_statement = f'{self.first_number} * {self.second_number} = {self.first_number * self.second_number}'
         divide_statement = f'{self.first_number} / {self.second_number} = {int(self.first_number / self.second_number)}'
         print(f'{add_statement}\n{subtract_statement}\n{multiply_statement}\n{divide_statement}')
+
+
+if __name__ == '__main__':
+    simple_math = SimpleMath()
+    simple_math.ask_two_numbers()
+    simple_math.calculate()
