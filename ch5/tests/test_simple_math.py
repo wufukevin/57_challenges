@@ -15,6 +15,13 @@ class SimpleMath(object):
         self.second_input = input("What is the second number? ")
         self.second_number = int(self.second_input)
 
+    def calculate(self):
+        add_statement = f'{self.first_number} + {self.second_number} = {self.first_number + self.second_number}'
+        subtract_statement = f'{self.first_number} - {self.second_number} = {self.first_number - self.second_number}'
+        multiply_statement = f'{self.first_number} * {self.second_number} = {self.first_number * self.second_number}'
+        divide_statement = f'{self.first_number} / {self.second_number} = {int(self.first_number / self.second_number)}'
+        print(f'{add_statement}\n{subtract_statement}\n{multiply_statement}\n{divide_statement}')
+
 
 class MyTestCase(unittest.TestCase):
     def setUp(self):
@@ -41,6 +48,7 @@ class MyTestCase(unittest.TestCase):
     @patch("builtins.input")
     def test_calculate(self, mock_input, mock_print):
         mock_input.side_effect = ["10", "5"]
+        self.simple_math.ask_two_numbers()
         self.simple_math.calculate()
         mock_print.assert_called_with("10 + 5 = 15\n10 - 5 = 5\n10 * 5 = 50\n10 / 5 = 2")
 
