@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "ch4"
+name = "mad_lib"
 version = "0.1.0"
 description = ""
 authors = ["SimonLin <sadwx4017@gmail.com>"]
