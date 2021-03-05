@@ -1,7 +1,7 @@
 import unittest
 from unittest.mock import patch
 
-from ch5.simple_math import SimpleMath
+from simple_math.simple_math import SimpleMath
 
 
 def result_should_be(mock_print, expected):
