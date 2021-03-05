@@ -1,7 +1,7 @@
 import unittest
 from unittest.mock import patch
 
-from ch2_counting_characters.character_counter import CharacterCounter
+from counting_characters.counter import CharacterCounter
 
 
 def given_input_word(mock_input, input_word):
