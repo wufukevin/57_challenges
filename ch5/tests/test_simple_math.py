@@ -49,6 +49,11 @@ class MyTestCase(unittest.TestCase):
         self.simple_math.calculate()
         result_should_be(mock_print, "10 + 5 = 15\n10 - 5 = 5\n10 * 5 = 50\n10 / 5 = 2")
 
+    @patch("builtins.input")
+    def test_input_negative_number(self, mock_input):
+        mock_input.side_effect = ["-1", "5"]
+        self.should_raise_exception()
+
     def input_should_be(self, first, second):
         self.assertEqual(first, self.simple_math.first_input)
         self.assertEqual(second, self.simple_math.second_input)

@@ -10,6 +10,8 @@ class SimpleMath(object):
         self.first_number = int(self.first_input)
         self.second_input = input("What is the second number? ")
         self.second_number = int(self.second_input)
+        if self.first_number < 0 or self.second_number < 0:
+            raise Exception
 
     def calculate(self):
         add_statement = f'{self.first_number} + {self.second_number} = {self.first_number + self.second_number}'
