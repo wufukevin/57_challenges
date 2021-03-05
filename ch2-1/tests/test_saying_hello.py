@@ -1,7 +1,7 @@
 import unittest
 from unittest.mock import patch
 
-from ch1_saying_hello.say_hello_robot import SayHelloRobot
+from saying_hello.say_hello_robot import SayHelloRobot
 
 
 def given_ask_name(mock_input, name):
@@ -24,23 +24,23 @@ class MyTestCase(unittest.TestCase):
     @patch("builtins.input")
     def test_ask_name_to_tony(self, mock_input):
         given_ask_name(mock_input, "Tony")
-        self.name_shoule_be("Tony")
+        self.name_should_be("Tony")
         question_should_be(mock_input, "What is your name? ")
 
-    def name_shoule_be(self, name_of_target):
+    def name_should_be(self, name_of_target):
         self.assertEqual(name_of_target, self.robot.ask_name())
 
     @patch("builtins.input")
     def test_ask_name_to_stark(self, mock_input):
         given_ask_name(mock_input, "Stark")
-        self.name_shoule_be("Stark")
+        self.name_should_be("Stark")
         question_should_be(mock_input, "What is your name? ")
 
     @patch("builtins.print")
     @patch("builtins.input")
     def test_say_hello_to_stark(self, mock_input, mock_print):
         given_ask_name(mock_input, "Stark")
-        self.name_shoule_be("Stark")
+        self.name_should_be("Stark")
         question_should_be(mock_input, "What is your name? ")
         hello_sentence = self.robot.generate_hello_sentence("Stark")
         self.hello_sentence_should_be(hello_sentence, "Hello, Stark, nice to meet you!")
@@ -51,7 +51,7 @@ class MyTestCase(unittest.TestCase):
     @patch("builtins.input")
     def test_say_hello_to_tony(self, mock_input, mock_print):
         given_ask_name(mock_input, "Tony")
-        self.name_shoule_be("Tony")
+        self.name_should_be("Tony")
         question_should_be(mock_input, "What is your name? ")
         hello_sentence = self.robot.generate_hello_sentence("Tony")
         self.hello_sentence_should_be(hello_sentence, "Hello, Tony, nice to meet you!")
