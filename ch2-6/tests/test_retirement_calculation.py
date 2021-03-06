@@ -26,7 +26,7 @@ class MyTestCase(unittest.TestCase):
 
     @patch("builtins.print")
     @patch("builtins.input")
-    def test_retirement_calculation(self, mock_input, mock_print):
+    def test_retirement_calculation_with_example_age(self, mock_input, mock_print):
         input_current_age(mock_input, 25)
         self.calculator.ask_current_age()
         input_retire_age(mock_input, 65)
@@ -35,6 +35,18 @@ class MyTestCase(unittest.TestCase):
         years_left_should_be(mock_print, 'You have 40 years left until you can retire.')
         self.calculator.show_retire_year()
         retire_year_should_be(mock_print, "It\'s 2015, so you can retire in 2055.")
+
+    @patch("builtins.print")
+    @patch("builtins.input")
+    def test_current_age_30_retire_age_50(self, mock_input, mock_print):
+        input_current_age(mock_input, 30)
+        self.calculator.ask_current_age()
+        input_retire_age(mock_input, 50)
+        self.calculator.ask_retire_age()
+        self.calculator.show_years_left()
+        years_left_should_be(mock_print, 'You have 20 years left until you can retire.')
+        self.calculator.show_retire_year()
+        retire_year_should_be(mock_print, "It\'s 2000, so you can retire in 2020.")
 
 
 if __name__ == '__main__':
