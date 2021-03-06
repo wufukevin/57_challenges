@@ -6,7 +6,16 @@ namespace zoe_2_2
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            string question = "What is the input string?";
+
+            Console.WriteLine(question);
+
+            string inputString = Console.ReadLine();
+
+            string resultString = $"{inputString} has {inputString.Length} characters.";
+
+            Console.WriteLine(resultString);
+
         }
     }
 }
