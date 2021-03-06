@@ -1,6 +1,6 @@
-word_01 = input('Enter a noun:')
-word_02 = input('Enter a verb:')
-word_03 = input('Enter a adjection:')
-word_04 = input('Enter a adverb:')
+Noun = input('Enter a noun:')
+Verb = input('Enter a verb:')
+Adjection = input('Enter a adjection:')
+Adverb = input('Enter a adverb:')
 
-print('Do you '+word_02+' your '+word_03+' '+ word_01+' '+ word_04+'? That\'s hilarious!')
+print(f'Do you {Verb} your {Adjection} {Noun} {Adverb}? That\'s hilarious!')
