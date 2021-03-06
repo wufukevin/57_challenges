@@ -21,7 +21,7 @@ def is_float(numStr):
         print("is_float() - error: " + str(ex))
     return flag
 
-def calculateSim_pleInterest(rate, principal, year):
+def calculateSimpleInterest(rate, principal, year):
     return(str(roundUp(principal*(1+rate*year/100), 1)))
 
 while True:
@@ -60,5 +60,5 @@ while True:
 
 
 for i in range(year):
-    print('After '+str(i+1)+' years at '+str(rate)+' %, the investment will be worth $'+calculateSim_pleInterest(rate,principal,i+1)+'.')
+    print('After '+str(i+1)+' years at '+str(rate)+' %, the investment will be worth $'+calculateSimpleInterest(rate,principal,i+1)+'.')
 
