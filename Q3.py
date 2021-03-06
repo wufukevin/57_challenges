@@ -3,4 +3,4 @@ import sys
 quote = input('What is the quote?')
 author = input('Who said it?')
 
-print(author + ' says, "' + quote + '"')
+print(f'{author} says, "{quote}"')
