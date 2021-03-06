@@ -8,26 +8,22 @@ namespace zoe_2_3
         {
             string quoteQuestion = "What is the quote ?";
 
-            string quote = askAndAnswer(quoteQuestion);
+            string quote = askForInput(quoteQuestion);
 
-            string manQuestion = "Who said it ?";
+            string speakerQuestion = "Who said it ?";
 
-            string man = askAndAnswer(manQuestion);
+            string speaker = askForInput(speakerQuestion);
 
 
-            string result = $"{man} says, \"{quote}\"";
-
-            Console.WriteLine(result);
+            Console.WriteLine($"{speaker} says, \"{quote}\"");
 
         }
 
-        private static string askAndAnswer(string question)
+        private static string askForInput(string question)
         {
-            Console.WriteLine(question);
+            Console.Write(question);
 
-            string answer = Console.ReadLine();
-
-            return answer;
+            return Console.ReadLine();
         }
     }
 }
