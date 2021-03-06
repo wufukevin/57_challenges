@@ -1,11 +1,22 @@
 import sys
-
-while True:
-    notRepeat = 1
+'''
+isNoInput = True
+while isNoInput:
     inputString = input('What is the input string?')
-    if not inputString:
-        notRepeat = 0
-    if  notRepeat:
-        break
+    if inputString:
+        isNoInput = False
 
-print(inputString + ' has ' + str(len(inputString)) + ' characters.')
+print(f'{inputString} has {len(inputString)} characters.')
+'''
+
+inputLength = ''
+
+def isNoInput(inputLength):
+    return inputLength == 0
+
+while isNoInput(inputLength): 
+    inputString = input('What is the input string?')
+    inputLength = len(inputString)
+
+print(f'{inputString} has {inputLength} characters.')
+    
