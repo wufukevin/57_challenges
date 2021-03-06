@@ -52,6 +52,20 @@ class MyTestCase(unittest.TestCase):
         self.calculator.show_retire_year()
         retire_year_should_be(mock_print, "It\'s 2000, so you can retire in 2020.")
 
+    @patch("retirement_calculation.retirement_calculation.current_year")
+    @patch("builtins.print")
+    @patch("builtins.input")
+    def test_already_retired(self, mock_input, mock_print, mock_year):
+        mock_year.return_value = 2000
+        input_current_age(mock_input, 60)
+        self.calculator.ask_current_age()
+        input_retire_age(mock_input, 50)
+        self.calculator.ask_retire_age()
+        self.calculator.show_years_left()
+        years_left_should_be(mock_print, 'You have retired for 10 years.')
+        self.calculator.show_retire_year()
+        retire_year_should_be(mock_print, "It\'s 2000, so you were retired in 1990.")
+
 
 if __name__ == '__main__':
     unittest.main()
