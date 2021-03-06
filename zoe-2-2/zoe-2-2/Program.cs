@@ -8,7 +8,7 @@ namespace zoe_2_2
         {
             string question = "What is the input string?";
 
-            Console.WriteLine(question);
+            Console.Write(question);
 
             string inputString = Console.ReadLine();
 

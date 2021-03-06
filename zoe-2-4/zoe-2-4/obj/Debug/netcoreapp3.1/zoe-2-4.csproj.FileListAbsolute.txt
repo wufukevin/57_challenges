@@ -1,0 +1,4 @@
+/Users/zoe.chang/Documents/m/57_challenges/zoe-2-4/zoe-2-4/obj/Debug/netcoreapp3.1/zoe-2-4.csprojAssemblyReference.cache
+/Users/zoe.chang/Documents/m/57_challenges/zoe-2-4/zoe-2-4/obj/Debug/netcoreapp3.1/zoe-2-4.AssemblyInfoInputs.cache
+/Users/zoe.chang/Documents/m/57_challenges/zoe-2-4/zoe-2-4/obj/Debug/netcoreapp3.1/zoe-2-4.AssemblyInfo.cs
+/Users/zoe.chang/Documents/m/57_challenges/zoe-2-4/zoe-2-4/obj/Debug/netcoreapp3.1/zoe-2-4.csproj.CoreCompileInputs.cache

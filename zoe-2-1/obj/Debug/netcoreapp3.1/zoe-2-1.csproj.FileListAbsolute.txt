@@ -1,0 +1,12 @@
+/Users/zoe.chang/Documents/m/57_challenges/zoe-2-1/bin/Debug/netcoreapp3.1/zoe-2-1.deps.json
+/Users/zoe.chang/Documents/m/57_challenges/zoe-2-1/bin/Debug/netcoreapp3.1/zoe-2-1.runtimeconfig.json
+/Users/zoe.chang/Documents/m/57_challenges/zoe-2-1/bin/Debug/netcoreapp3.1/zoe-2-1.runtimeconfig.dev.json
+/Users/zoe.chang/Documents/m/57_challenges/zoe-2-1/bin/Debug/netcoreapp3.1/zoe-2-1.dll
+/Users/zoe.chang/Documents/m/57_challenges/zoe-2-1/bin/Debug/netcoreapp3.1/zoe-2-1.pdb
+/Users/zoe.chang/Documents/m/57_challenges/zoe-2-1/obj/Debug/netcoreapp3.1/zoe-2-1.csprojAssemblyReference.cache
+/Users/zoe.chang/Documents/m/57_challenges/zoe-2-1/obj/Debug/netcoreapp3.1/zoe-2-1.AssemblyInfoInputs.cache
+/Users/zoe.chang/Documents/m/57_challenges/zoe-2-1/obj/Debug/netcoreapp3.1/zoe-2-1.AssemblyInfo.cs
+/Users/zoe.chang/Documents/m/57_challenges/zoe-2-1/obj/Debug/netcoreapp3.1/zoe-2-1.csproj.CoreCompileInputs.cache
+/Users/zoe.chang/Documents/m/57_challenges/zoe-2-1/obj/Debug/netcoreapp3.1/zoe-2-1.dll
+/Users/zoe.chang/Documents/m/57_challenges/zoe-2-1/obj/Debug/netcoreapp3.1/zoe-2-1.pdb
+/Users/zoe.chang/Documents/m/57_challenges/zoe-2-1/obj/Debug/netcoreapp3.1/zoe-2-1.genruntimeconfig.cache
