@@ -6,11 +6,19 @@ namespace zoe_2_1
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("What is your name?");
+            string welcomeWord = "What is your name?";
+
+            Console.WriteLine(welcomeWord);
 
             string userName = Console.ReadLine();
 
-            Console.WriteLine($"Hello, {userName}, nice to meet you!");
+            string greetingWord = $"Hello, {userName}, nice to meet you!";
+
+
+            // Challenge 1
+            //string greetingWord = $"Hello, {Console.ReadLine()}, nice to meet you!";
+
+            Console.WriteLine(greetingWord);
 
         }
     }
