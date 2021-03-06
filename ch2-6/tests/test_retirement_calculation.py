@@ -1,18 +1,21 @@
 import unittest
 from unittest.mock import patch
 
+from retirement_calculation.retirement_calculation import RetirementCalculator
+
 
 class MyTestCase(unittest.TestCase):
-    @patch("datetime.date.today")
+    @patch("builtins.print")
     @patch("builtins.input")
-    def test_retirement_calculation(self, mock_input, mock_today):
+    def test_retirement_calculation(self, mock_input, mock_print):
         mock_input.side_effect = [25, 65]
-        mock_today.year.return_value = 2015
         calculator = RetirementCalculator()
         calculator.ask_current_age()
         calculator.ask_retire_age()
-        self.assertEqual('You have 40 years left until you can retire.', calculator.show_years_left())
-        self.assertEqual('It\'s 2015, so you can retire in 2055.', calculator.show_retire_year())
+        calculator.show_years_left()
+        mock_print.assert_called_with('You have 40 years left until you can retire.')
+        calculator.show_retire_year()
+        mock_print.assert_called_with("It\'s 2015, so you can retire in 2055.")
 
 
 if __name__ == '__main__':
