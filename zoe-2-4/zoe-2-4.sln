@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.809.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "zoe-2-4", "zoe-2-4\zoe-2-4.csproj", "{9A87F092-636F-4071-8D05-8397AA4EDF12}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "zoe-2-4", "zoe-2-4\zoe-2-4.csproj", "{0F55549C-497C-4DA4-955E-750A364F6B41}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{9A87F092-636F-4071-8D05-8397AA4EDF12}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9A87F092-636F-4071-8D05-8397AA4EDF12}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9A87F092-636F-4071-8D05-8397AA4EDF12}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9A87F092-636F-4071-8D05-8397AA4EDF12}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0F55549C-497C-4DA4-955E-750A364F6B41}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F55549C-497C-4DA4-955E-750A364F6B41}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F55549C-497C-4DA4-955E-750A364F6B41}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F55549C-497C-4DA4-955E-750A364F6B41}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {D04FC09B-858E-4F4D-A437-F10480C3AA04}
+		SolutionGuid = {4B9FF9CD-A101-44ED-A616-9F6606A64A37}
 	EndGlobalSection
 EndGlobal
