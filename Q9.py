@@ -1,33 +1,24 @@
+import RegulationFunction as rf
+import math
 squareFeetForOneGallon = 350
 
-while True:
-    notrepeat = 1
-    length_input = input('What is the length of the room in feet ? ')
-    if length_input.isdigit():
-        length = float(length_input)
-    else:
-        print('Please enter a valid number.')
-        notrepeat = 0
-    if notrepeat:
-        break
+def Isdigit(Parameter):
+    try:
+        floatParameter = float(Parameter)
+        return True
+    except Exception as ex :
+        print('Please enter a number!')
+        return False
 
-while True:
-    notrepeat = 1
-    width_input = input('What is the width of the room in feet ? ')
-    if width_input.isdigit():
-        width = float(width_input)
-    else:
-        print('Please enter a valid number.')
-        notrepeat = 0
-    if notrepeat:
-        break
+input_01 = rf.InputFunction('What is the length of the room in feet ? ', 1, Isdigit)
+input_02 = rf.InputFunction('What is the width of the room in feet ? ', 2, Isdigit)
 
-def gallonNumber(x):
-    if x%squareFeetForOneGallon == 0:
-        return str(int(x/squareFeetForOneGallon))
-    else:
-        return str(int(x/squareFeetForOneGallon)+1)
+length = float(input_01)
+width = float(input_02)
+
+def gallonNeedAmount(area):
+    return int(math.ceil(area/squareFeetForOneGallon))
 
 area = length*width
 
-print('You will need to purchase '+gallonNumber(area)+' gallons of paint to cover '+str(area)+' square feet.')
+print(f'You will need to purchase {gallonNeedAmount(area)} gallons of paint to cover {area} square feet.')

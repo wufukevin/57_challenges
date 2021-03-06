@@ -2,14 +2,9 @@ import RegulationFunction as rf
 
 def IsPostiveNum(Parameter):
     if Parameter.isdigit():
-        num = int(Parameter)
-        if num>0:
-            return True
-        else:
-            print('Please enter a postive number!')
-            return False
+        return True
     else:
-        print('Please enter a number!')
+        print('Please enter a postive number!')
         return False
 
 

@@ -1,47 +1,34 @@
-while True:
-    notrepeat = 1
-    people_input = input('How many people? ')
-    if people_input.isdigit():
-        people = float(people_input)
-        if people%1 == 0:
-            people = int(people)
-        else:
-            print('Please enter an integer.')
-            notrepeat = 0
-    else:
-        print('Please enter a number.')
-        notrepeat = 0
-    if notrepeat:
-        break
+import RegulationFunction as rf
 
-while True:
-    notrepeat = 1
-    pizza_input = input('How many pizzas do you have? ')
-    if pizza_input.isdigit():
-        pizza = float(pizza_input)
-        if pizza%1 == 0:
-            pizza = int(pizza)
+def IsInteger(Parameter):
+    if Parameter.isdigit():
+        num = float(Parameter)
+        if num%1==0:
+            return True
         else:
-            print('Please enter an integer.')
-            notrepeat = 0
+            print('Please enter an integer!')
+            return False
     else:
-        print('Please enter a number.')
-        notrepeat = 0
-    if notrepeat:
-        break
+        print('Please enter a number!')
+        return False
 
-def plural(x):
-    if x==0 or x==1:
+def plural(num):
+    if num==0 or num==1:
         return('')
     else:
         return('s')
 
+input_01 = rf.InputFunction('How many people? ', 1, IsInteger)
+input_02 = rf.InputFunction('How many pizzas do you have? ', 2, IsInteger)
+
+people = int(input_01)
+pizza = int(input_02)
 
 piece_of_pizza = pizza*8
 piece_of_eachPerson = int(piece_of_pizza/people)
 rest_pizza = int(piece_of_pizza%people)
 
 print()
-print(people_input+' people with '+pizza_input+' pizza'+plural(pizza_input))
-print('Each person gets '+str(piece_of_eachPerson)+' piece'+plural(piece_of_eachPerson)+' of pizza.')
-print('There are '+str(rest_pizza)+' leftover piece'+plural(rest_pizza)+'.')
+print(f'{people} people with {pizza} pizza{plural(pizza)}')
+print(f'Each person gets {piece_of_eachPerson} piece{plural(piece_of_eachPerson)} of pizza.')
+print(f'There are {rest_pizza} leftover piece{plural(rest_pizza)}.')

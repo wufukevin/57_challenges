@@ -1,40 +1,42 @@
-unit = int(input('What unit do you want ot enter? 1) meter 2)feet ?')) - 1
+import RegulationFunction as rf
 
-unit_str = 'feet' if unit else 'meter'
-
-while True:
-    notrepeat = 1
-    length_input = input('What is the length of the room in '+unit_str+'?')
-    if length_input.isdigit():
-        length = float(length_input)
+def Isdigit(Parameter):
+    if Parameter.isdigit():
+        return True
     else:
-        print('Please enter a valid number.')
-        notrepeat = 0
-    if notrepeat:
-        break
+        print('Please enter a number!')
+        return False
 
-while True:
-    notrepeat = 1
-    width_input = input('What is the width of the room in '+unit_str+'?')
-    if width_input.isdigit():
-        width = float(width_input)
+def IsFeet(unit_choose):
+    if unit_choose == 1:
+        return False
     else:
-        print('Please enter a valid number.')
-        notrepeat = 0
-    if notrepeat:
-        break
+        return True
 
-def conversion(x):
-    if unit:
-        return x*0.09290304
+def anotherUnit(unit_choose):
+    if unit_choose == 1:
+        return 'feet'
     else:
-        return x/0.09290304
+        return 'meters'
 
-print('You entered dimensions of '+length_input+' '+unit_str+' by '+width_input+' '+unit_str+'.')
+unit_choose = int(input('What unit do you want ot enter? 1) meter 2)feet ? '))
+
+unit = 'feet' if IsFeet(unit_choose) else 'meter'
+
+input_01 = rf.InputFunction(f'What is the length of the room in {unit} ? ', 1, Isdigit)
+input_02 = rf.InputFunction(f'What is the width of the room in {unit} ? ', 1, Isdigit)
+
+length = float(input_01)
+width = float(input_02)
+
+def conversion(num, unit_choose):
+    if IsFeet(unit_choose):
+        return num*0.09290304
+    else:
+        return num/0.09290304
+
+print()
+print(f'You entered dimensions of {length} {unit} by {width} {unit}.')
 print('The area is')
-if unit:
-    print(str(round(length*width, 3))+' square feet')
-    print(str(round(conversion(length*width), 3))+ ' square meters')
-else:
-    print(str(round(length*width, 3))+' square meters')
-    print(str(round(conversion(length*width), 3))+' squre feet')
+print(f'{round(length*width, 3)} square {unit}')
+print(f'{round(conversion(length*width, unit_choose), 3)}  square {anotherUnit(unit_choose)}')

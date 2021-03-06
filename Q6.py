@@ -1,40 +1,30 @@
 from datetime import datetime
+import RegulationFunction as rf
+
+def IsPostiveNum(Parameter):
+    if Parameter.isdigit():
+        num = int(Parameter)
+        if num>0:
+            return True
+        else:
+            print('Please enter a postive number!')
+            return False
+    else:
+        print('Please enter a number!')
+        return False
+
+
+input_01 = rf.InputFunction('What is your current age? ', 1, IsPostiveNum)
+input_02 = rf.InputFunction('At what age would you like to retire? ', 2, IsPostiveNum)
 
 now = datetime.now()
-
-while True:
-    notrepeat = 1
-    input_01 = input('What is your current age?')
-    if input_01.isdigit():
-        num_01 = int(input_01)
-        if num_01<0:
-            print('Please enter a postive number!')
-            notrepeat = 0
-    else:
-        print('Please enter a number!')
-        notrepeat = 0
-
-    if notrepeat:
-        break
-while True:
-    notrepeat = 1
-    input_02 = input('At what age would you like to retire?')
-    if input_02.isdigit():
-        num_02 = int(input_02)
-        if num_02<0:
-            print('Please enter a postive number!')
-            notrepeat = 0
-    else:
-        print('Please enter a number!')
-        notrepeat = 0
-
-    if notrepeat:
-        break
+num_01 = int(input_01)
+num_02 = int(input_02)
 
 dif = num_02-num_01
 
 if dif<0:
     print('You can already retire.')
 else:
-    print('You have '+str(dif)+' years left until you can retire.')
-    print("It's "+str(now.year)+", so you can retire in "+str(now.year+dif)+'.')
+    print(f'You have {dif} years left until you can retire.')
+    print(f"It's {now.year}, so you can retire in {now.year+dif}.")

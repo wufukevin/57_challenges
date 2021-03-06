@@ -1,10 +1,9 @@
 def InputFunction(InputString, InputOrder, EnsureFunction):
 
-    InputCorrect = True
-    while InputCorrect:
+    InputNotCorrect = True
+    while InputNotCorrect:
+        InputNotCorrect = False
         Input = input(InputString)
         if not EnsureFunction(Input):
-            InputCorrect = False
-        if InputCorrect:
-            break
+            InputNotCorrect = True
     return Input
