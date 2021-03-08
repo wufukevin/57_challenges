@@ -10,11 +10,11 @@ def Isdigit(Parameter):
         print('Please enter a number!')
         return False
 
-input_01 = rf.InputFunction('What is the length of the room in feet ? ', 1, Isdigit)
-input_02 = rf.InputFunction('What is the width of the room in feet ? ', 2, Isdigit)
+input_length = rf.InputFunction('What is the length of the room in feet ? ', 1, Isdigit)
+input_width = rf.InputFunction('What is the width of the room in feet ? ', 2, Isdigit)
 
-length = float(input_01)
-width = float(input_02)
+length = float(input_length)
+width = float(input_width)
 
 def gallonNeedAmount(area):
     return int(math.ceil(area/squareFeetForOneGallon))

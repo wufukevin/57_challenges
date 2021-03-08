@@ -1,19 +1,21 @@
 import RegulationFunction as rf
 
 def IsInteger(Parameter):
-    if Parameter.isdigit():
-        num = float(Parameter)
-        if num%1==0:
-            return True
-        else:
-            print('Please enter an integer!')
-            return False
-    else:
+    if not Parameter.isdigit():
         print('Please enter a number!')
         return False
 
-def plural(num):
-    if num==0 or num==1:
+    num = float(Parameter)
+    if num%1==0:
+        return True
+    
+    print('Please enter an integer!')
+    return False
+    
+        
+
+def plural(amount):
+    if amount<=1:
         return('')
     else:
         return('s')

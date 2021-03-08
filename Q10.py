@@ -1,18 +1,10 @@
 import RegulationFunction as rf
 
-price = []
-quantity = []
-itemNumber = 0
+priceAndQuantity = []
 taxRate = 5.5
-noMoreItem = False
 
 def IsdigitOrNO(Parameter):
-    global itemNumber
-    global noMoreItem
-    if Parameter.isdigit():
-        return True
-    elif Parameter=='NO':
-        noMoreItem = True
+    if Parameter.isdigit() or Parameter=='NO':
         return True
     else:
         print('Please enter a valid number.')
@@ -25,20 +17,17 @@ print()
 
 
 while True:
-    
-    price.append(rf.InputFunction(f'Enter the price of item {itemNumber+1}: ', itemNumber+1, IsdigitOrNO))
-
-    if noMoreItem:
+    itemNumber = len(priceAndQuantity)+1
+    priceInput = rf.InputFunction(f'Enter the price of item {itemNumber}: ', itemNumber, IsdigitOrNO)
+    if priceInput=='NO':
         break
-    
-    quantity.append(rf.InputFunction(f'Enter the quantity of item {itemNumber+1}: ', itemNumber+1, IsdigitOrNO))
-    itemNumber += 1
+    quantityInput = rf.InputFunction(f'Enter the quantity of item {itemNumber}: ', itemNumber, IsdigitOrNO)
+    priceAndQuantity.append((priceInput, quantityInput))
     
 
 subtotal = 0
-for i in range(itemNumber):
-    subtotal += float(price[i])*float(quantity[i])
-
+for price, quantity in priceAndQuantity:
+    subtotal += float(price)*float(quantity)
 subtotal = round(subtotal, 2)
 tax = round(subtotal*taxRate/100, 2)
 total = subtotal+tax

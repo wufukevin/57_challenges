@@ -21,10 +21,11 @@ now = datetime.now()
 num_01 = int(input_01)
 num_02 = int(input_02)
 
-dif = num_02-num_01
+yearsLeft = num_02-num_01
+retireYear = now.year+yearsLeft
 
-if dif<0:
+if yearsLeft<0:
     print('You can already retire.')
 else:
-    print(f'You have {dif} years left until you can retire.')
-    print(f"It's {now.year}, so you can retire in {now.year+dif}.")
+    print(f'You have {yearsLeft} years left until you can retire.')
+    print(f"It's {now.year}, so you can retire in {retireYear}.")

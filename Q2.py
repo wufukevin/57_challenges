@@ -19,4 +19,3 @@ while isNoInput(inputLength):
     inputLength = len(inputString)
 
 print(f'{inputString} has {inputLength} characters.')
-    
