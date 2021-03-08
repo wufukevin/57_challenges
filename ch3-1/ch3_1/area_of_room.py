@@ -2,6 +2,9 @@ FEET_TO_METER_RATE = 0.09290304
 
 
 class RoomArea(object):
+    def __init__(self):
+        self.unit = 'feet'
+
     def ask_for_length(self):
         self.length = input("What is the length of the room in feet? ")
         if not self.length.isdigit():
@@ -13,7 +16,24 @@ class RoomArea(object):
             raise Exception()
 
     def summary(self):
-        area_in_feet = int(self.length) * int(self.width)
-        area_in_meters = area_in_feet * FEET_TO_METER_RATE
+        area_in_feet = self.areasInFeet()
+        area_in_meters = self.areaInMeter()
         print(
-            f"You entered dimensions of {self.length} feet by {self.width} feet.\nThe area is\n{area_in_feet} square feet\n{area_in_meters:.3f} square meters")
+            f"You entered dimensions of {self.length} {self.unit} by {self.width} {self.unit}.\nThe area is\n{area_in_feet} square feet\n{area_in_meters} square meters")
+
+    def ask_for_unit(self):
+        self.unit = input('Please choose unit: feet or meter? ')
+        if self.unit != 'feet' and self.unit != 'meter':
+            raise Exception()
+
+    def areaInMeter(self):
+        if self.unit == 'feet':
+            return f'{int(self.length) * int(self.width) * FEET_TO_METER_RATE:.3f}'
+        else:
+            return f'{int(self.length) * int(self.width)}'
+
+    def areasInFeet(self):
+        if self.unit == 'feet':
+            return f'{int(self.length) * int(self.width)}'
+        else:
+            return f'{int(self.length) * int(self.width) / FEET_TO_METER_RATE:.3f}'
