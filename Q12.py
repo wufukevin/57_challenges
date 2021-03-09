@@ -1,4 +1,5 @@
 import math
+import RegulationFunction as rf
 
 ''' 無條件進位 dig :小數點後第幾位
 '''
@@ -6,59 +7,39 @@ def roundUp(num, dig):
     digNum = 1
     for i in range(dig):
         digNum *= 10
-
     return(math.ceil(num*digNum)/float(digNum))
 
-def is_float(numStr):
-    ''' 字符串是否是浮点数(整数算小数)
-    '''
+def isFloat(numStr):
     flag = False
-    numStr = str(numStr).strip().lstrip('-').lstrip('+')    # 去除正数(+)、负数(-)符号
+    numStr = str(numStr).strip().lstrip('-').lstrip('+')
     try:
         numFloat = float(numStr)
         flag = True
     except Exception as ex:
-        print("is_float() - error: " + str(ex))
+        print("isFloat() - error: " + str(ex))
     return flag
 
+def isDigit(Parameter):
+    try:
+        floatParameter = float(Parameter)
+        return True
+    except Exception as ex :
+        print('Please enter a number!')
+        return False
+
 def calculateSimpleInterest(rate, principal, year):
-    return(str(roundUp(principal*(1+rate*year/100), 1)))
-
-while True:
-    notrepeat = 1
-    principal_input = input('Enter the principal: ')
-    if principal_input.isdigit():
-        principal = int(principal_input)
-    else:
-        print('Please enter a valid number.')
-        notrepeat = 0
-    if notrepeat:
-        break
-while True:
-    notrepeat = 1
-    rate_input = input('Enter the rate: ')
-    if is_float(rate_input):
-        rate = float(rate_input)
-    else:
-        print('Please enter a valid number.')
-        notrepeat = 0
-    if notrepeat:
-        break
-while True:
-    notrepeat = 1
-    year_input = input('Enter the number of years: ')
-    if year_input.isdigit():
-        year = int(year_input)
-    else:
-        print('Please enter a valid number.')
-        notrepeat = 0
-    if notrepeat:
-        break
+    return(roundUp(principal*(1+rate*year/100), 1))
 
 
+input_principal = rf.InputFunction('Enter the principal: ', 1, isDigit)
+input_rate = rf.InputFunction('nter the rate: ', 2, isFloat)
+input_year = rf.InputFunction('Enter the number of years: ', 3, isDigit)
 
+principal = int(input_principal)
+rate = float(input_rate)
+year = int(input_year)
 
-
-for i in range(year):
-    print('After '+str(i+1)+' years at '+str(rate)+' %, the investment will be worth $'+calculateSimpleInterest(rate,principal,i+1)+'.')
+for eachYear in range(year):
+    eachYear += 1
+    print(f'After {eachYear} years at {rate} %, the investment will be worth ${calculateSimpleInterest(rate,principal,eachYear)}.')
 

@@ -1,4 +1,5 @@
 import math
+import RegulationFunction as rf
 
 ''' 無條件進位 dig :小數點後第幾位
 '''
@@ -9,17 +10,23 @@ def roundUp(num, dig):
 
     return(math.ceil(num*digNum)/float(digNum))
 
-def is_float(numStr):
-    ''' 字符串是否是浮点数(整数算小数)
-    '''
+def isFloat(numStr):
     flag = False
-    numStr = str(numStr).strip().lstrip('-').lstrip('+')    # 去除正数(+)、负数(-)符号
+    numStr = str(numStr).strip().lstrip('-').lstrip('+')
     try:
         numFloat = float(numStr)
         flag = True
     except Exception as ex:
-        print("is_float() - error: " + str(ex))
+        print("isFloat() - error: " + str(ex))
     return flag
+
+def isDigit(Parameter):
+    try:
+        floatParameter = float(Parameter)
+        return True
+    except Exception as ex :
+        print('Please enter a number!')
+        return False
 
 def calculateCompoundInterest(rate, principal, year, numPerYear):
     ans = principal
@@ -28,49 +35,15 @@ def calculateCompoundInterest(rate, principal, year, numPerYear):
         ans *= comPerTime
     return(roundUp(ans, 2))
 
-while True:
-    notrepeat = 1
-    principal_input = input('What is the principal amount? ')
-    if principal_input.isdigit():
-        principal = int(principal_input)
-    else:
-        print('Please enter a valid number.')
-        notrepeat = 0
-    if notrepeat:
-        break
-while True:
-    notrepeat = 1
-    rate_input = input('What is the rate? ')
-    if is_float(rate_input):
-        rate = float(rate_input)
-    else:
-        print('Please enter a valid number.')
-        notrepeat = 0
-    if notrepeat:
-        break
-while True:
-    notrepeat = 1
-    year_input = input('What is the number of years? ')
-    if year_input.isdigit():
-        year = int(year_input)
-    else:
-        print('Please enter a valid number.')
-        notrepeat = 0
-    if notrepeat:
-        break
-while True:
-    notrepeat = 1
-    numberPerYear_input = input('What is the number of times the interest is compounded per year? ')
-    if numberPerYear_input.isdigit():
-        numberPerYear = int(numberPerYear_input)
-    else:
-        print('Please enter a valid number.')
-        notrepeat = 0
-    if notrepeat:
-        break
+input_principal = rf.InputFunction('What is the principal amount? ', 1, isDigit)
+input_rate = rf.InputFunction('What is the rate? ', 2, isFloat)
+input_year = rf.InputFunction('What is the number of years? ', 3, isDigit)
+input_numberPerYear = rf.InputFunction('What is the number of times the interest is compounded per year? ', 4, isDigit)
 
+principal = int(input_principal)
+rate = float(input_rate)
+year = int(input_year)
+numberPerYear = int(input_numberPerYear)
+amount = calculateCompoundInterest(rate, principal, year, numberPerYear)
 
-
-
-
-print('$'+principal_input+' invested at '+rate_input+'%'+' for '+year_input+' years compounded '+numberPerYear_input+' times per year is $'+str(calculateCompoundInterest(rate, principal, year, numberPerYear))+'.')
+print(f'${principal} invested at {rate}% for {year} years compounded {numberPerYear} times per year is ${amount}.')
