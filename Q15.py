@@ -1,17 +1,22 @@
 import RegulationFunction as rf
 
-def isDigit(Parameter):
-    try:
-        floatParameter = float(Parameter)
+passwordMap = [['a','111'],['b','222'],['c','333'],['d','444']]
+
+for username, password in passwordMap:
+    print(username, password)
+
+def IsPasswordCorrect(inputPassword):
+    if inputPassword==correctPassword:
+        print('Welcome!')
         return True
-    except Exception as ex :
-        print('Please enter a number!')
+    else:
+        print('I do not know you.')
+        print('Please enter again.')
         return False
 
-def presetEnsureFunction(everyThing):
-    return True
 
-input_1 = rf.InputFunction('What is the order amount? ', 1, isDigit)
-print(input_1)
-input_2 = rf.InputFunction('What is the order amount? ', 1, presetEnsureFunction)
-print(input_2)
+input_username = rf.InputFunction('What is the username? ')
+for username, password in passwordMap:
+    if username==input_username:
+        correctPassword = password
+input_password = rf.InputFunction('What is the password? ',1,IsPasswordCorrect)
