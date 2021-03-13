@@ -4,7 +4,7 @@ def presetEnsureFunction(everyThing):
     return True
 
 
-def InputFunction(InputString, InputOrder = 1, EnsureFunction = presetEnsureFunction):
+def InputFunction(InputString, InputOrder = '1', EnsureFunction = presetEnsureFunction):
     InputNotCorrect = True
     while InputNotCorrect:
         InputNotCorrect = False
