@@ -1,6 +1,10 @@
 from collections.abc import Callable
 
-def InputFunction(InputString, InputOrder, EnsureFunction):
+def presetEnsureFunction(everyThing):
+    return True
+
+
+def InputFunction(InputString, InputOrder, EnsureFunction = presetEnsureFunction):
     InputNotCorrect = True
     while InputNotCorrect:
         InputNotCorrect = False
