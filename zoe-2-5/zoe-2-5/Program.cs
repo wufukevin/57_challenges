@@ -5,64 +5,56 @@ namespace zoe_2_5
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
-            string sum;
-            string difference;
-            string product;
-            string quotient;
+            int sum;
+            int difference;
+            int product;
+            int quotient;
             string resultString = string.Empty;
 
             string number1Question = "What is the first number?";
             string number2Question = "What is the second number?";
 
-            int number1 = askForInput(number1Question);
-            int number2 = askForInput(number2Question);
+            int number1;
+            int number2;
 
-            sum = Convert.ToString(number1 + number2);
-            difference = Convert.ToString(number1 - number2);
-            product = Convert.ToString(number1 * number2);
-            quotient = Convert.ToString(number1 / number2);
+            try { 
+                number1 = askForInput(number1Question);
+                number2 = askForInput(number2Question);
+            }
+            catch (FormatException)
+            {
+                Console.WriteLine("Unable to parse");
+                return;
+            }
 
-            resultString = $"{number1} + {number2} = {sum}\n{number1} - {number2} = {difference}\n{number1} * {number2} = {product}\n{number1} / {number2} = {quotient}";
+            //sum = number1 + number2;
+            //difference = number1 - number2;
+            //product = number1 * number2;
+            //quotient = number1 / number2;
 
+            //resultString = $"{number1} + {number2} = {sum}\n{number1} - {number2} = {difference}\n{number1} * {number2} = {product}\n{number1} / {number2} = {quotient}";
 
-            //string numbers = $"{number1} + {number2}, {number1} - {number2}, {number1} * {number2}, {number1} / {number2}";
-            //string[] equations = numbers.Split(',');
+            string numbers = $"{number1} + {number2}, {number1} - {number2}, {number1} * {number2}, {number1} / {number2}";
+            string[] equations = numbers.Split(',');
 
-            //foreach(string equation in equations)
-            //{
-            //    Console.WriteLine(equation);
-            //    DataTable dt = new DataTable();
-            //    object result = dt.Compute(equation, "");
-            //    resultString += $"{equation} = {result} \n";
-            //}
+            foreach (string equation in equations)
+            {
+                DataTable dt = new DataTable();
+                object result = dt.Compute(equation, "");
+                resultString += $"{equation} = {result} \n";
+            }
 
             Console.WriteLine(resultString);
-
-
-
+            
         }
 
         private static int askForInput(string question)
         {
-            int number = 0;
-
             Console.Write(question);
 
-            string input = Console.ReadLine();
-
-            try
-            {
-                number = Int32.Parse(input);
-            }
-            catch (FormatException)
-            {
-                Console.WriteLine($"Unable to parse '{input}'");
-            }
-
-            return number;
+            return Int32.Parse(Console.ReadLine());
         }
-
     }
 }
