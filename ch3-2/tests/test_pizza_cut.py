@@ -1,58 +1,7 @@
 import unittest
 from unittest.mock import patch
 
-PIECES_PER_PIZZA = 8
-
-
-class PizzaParty(object):
-    def ask_for_function(self):
-        self.function = input("Select Pizza Party Function: Cut Or Count")
-        if self.function.lower() != 'cut' and self.function.lower() != 'count':
-            raise Exception
-
-    def ask_questions_by_function(self):
-        if self.function.lower() == 'cut':
-            self.ask_how_many_people()
-            self.ask_how_many_pizza()
-        else:
-            self.ask_how_many_people()
-            self.ask_pieces_desired_for_each()
-
-    def ask_how_many_people(self):
-        self.people = input("How many people? ")
-        if not self.people.isdigit():
-            raise Exception()
-
-    def work(self):
-        if self.function.lower() == 'cut':
-            print(
-                f"{self.people} people with {self.pizza} pizza{self.is_plural(int(self.pizza))}\nEach person gets {self.cut_pieces()} piece{self.is_plural(self.cut_pieces())} of pizza.\nThere are {self.leftover_pieces()} leftover pieces.")
-        else:
-            print(
-                f"{self.people} people with {self.pieces} piece{self.is_plural(int(self.pieces))} of pizza desired for each.\nThere should be {self.total_pizza()} pizza{self.is_plural(self.total_pizza())}.")
-
-    def ask_how_many_pizza(self):
-        self.pizza = input("How many pizzas do you have? ")
-        if not self.pizza.isdigit():
-            raise Exception()
-
-    def is_plural(self, number):
-        return 's' if number > 1 else ''
-
-    def cut_pieces(self):
-        return int(int(self.pizza) * PIECES_PER_PIZZA / int(self.people))
-
-    def leftover_pieces(self):
-        return int(int(self.pizza) * PIECES_PER_PIZZA % int(self.people))
-
-    def ask_pieces_desired_for_each(self):
-        self.pieces = input("How many pieces of each people? ")
-        if not self.pieces.isdigit():
-            raise Exception()
-
-    def total_pizza(self):
-        total_pieces = int(self.pieces) * int(self.people)
-        return int(total_pieces / PIECES_PER_PIZZA) + (1 if total_pieces % PIECES_PER_PIZZA > 0 else 0)
+from ch3_2.pizza_cut import PizzaParty
 
 
 def given_function(mock_input, function):
@@ -178,10 +127,50 @@ class MyTestCase(unittest.TestCase):
     def test_ask_non_numeric_people_or_pizza(self, mock_input):
         given_function(mock_input, 'cut')
         self.when_ask_function()
-        mock_input.side_effect = ["a", "1"]
+        given_input_by_function(mock_input, ['a', '1'])
         self.then_raise_exception(self.when_ask_question_by_function)
-        mock_input.side_effect = ["1", "a"]
+        given_input_by_function(mock_input, ['1', 'a'])
         self.then_raise_exception(self.when_ask_question_by_function)
+
+    @patch("builtins.input")
+    def test_cut_pizza_1_people_0(self, mock_input):
+        given_function(mock_input, 'cut')
+        self.when_ask_function()
+        given_input_by_function(mock_input, ['0', '1'])
+        self.then_raise_exception(self.when_ask_question_by_function)
+
+    @patch('builtins.print')
+    @patch('builtins.input')
+    def test_cut_pizza_0_people_1(self, mock_input, mock_print):
+        given_function(mock_input, 'cut')
+        self.when_ask_function()
+        given_input_by_function(mock_input, ['1', '0'])
+        self.when_ask_question_by_function()
+        self.when_work()
+        result_should_be(mock_print,
+                         '1 people with 0 pizza\nEach person gets 0 piece of pizza.\nThere are 0 leftover pieces.')
+
+    @patch('builtins.print')
+    @patch('builtins.input')
+    def test_count_1_people_0_pieces(self, mock_input, mock_print):
+        given_function(mock_input, 'count')
+        self.when_ask_function()
+        given_input_by_function(mock_input, ['1', '0'])
+        self.when_ask_question_by_function()
+        self.when_work()
+        result_should_be(mock_print,
+                         '1 people with 0 piece of pizza desired for each.\nThere should be 0 pizza.')
+
+    @patch('builtins.print')
+    @patch('builtins.input')
+    def test_count_0_people_1_pieces(self, mock_input, mock_print):
+        given_function(mock_input, 'count')
+        self.when_ask_function()
+        given_input_by_function(mock_input, ['0', '1'])
+        self.when_ask_question_by_function()
+        self.when_work()
+        result_should_be(mock_print,
+                         '0 people with 1 piece of pizza desired for each.\nThere should be 0 pizza.')
 
     def then_raise_exception(self, action):
         with self.assertRaises(Exception):
