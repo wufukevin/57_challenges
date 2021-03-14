@@ -10,12 +10,12 @@ def isFloat(numStr):
         print("isFloat() - error: " + str(ex))
     return flag
 
-def correctUnitInput(Parameter):
-    lower = Parameter.lower()
-    if lower == 'c' or lower == 'f':
-        return True
-    print('Please choose the options.')
-    return False
+def correctUnitInput(unitString):
+    unit = unitString.lower()
+    correctunit = unit == 'c' or unit == 'f'
+    if not correctunit:
+        print('Please choose the options.')
+    return correctunit
 
 def CF_conversion(From, temperature):
     if From == 'Celsius':
@@ -27,15 +27,16 @@ print('Press C to convert from Fahrenheit to Celsius.')
 print('Press F to convert from Celsius to Fahrenheit.')
 input_unit = rf.InputFunction('Your choice: ', 1, correctUnitInput)
 print('')
-if input_unit.lower() == 'c' :
+isToCelsius = input_unit.lower() == 'c' 
+if isToCelsius:
     From = 'Fahrenheit'
     To =  'Celsius'
 else:
     From = 'Celsius'
     To = 'Fahrenheit'
 
-input_temperature = rf.InputFunction(f'Please enter the temperature in {From}: ', 1, isFloat)
+input_temperature = rf.InputFunction(f'Please enter the temperature in {From}: ', 1, rf.isFloat)
 
 conversedTemperature = CF_conversion(From, float(input_temperature))
 
-print(f'The temperature in {To} is {conversedTemperature}.')
+print(f'The temperature in {To} is {conversedTemperature} .')
