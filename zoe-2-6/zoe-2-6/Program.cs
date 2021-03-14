@@ -9,8 +9,19 @@ namespace zoe_2_6
             string ageQuestion = "What is your current age ?";
             string retirementAgeQuestion = "At what age would you like to retire ?";
 
-            int age = askForInput(ageQuestion);
-            int retirementAge = askForInput(retirementAgeQuestion);
+            int age;
+            int retirementAge;
+
+            try
+            {
+                age = askForInput(ageQuestion);
+                retirementAge = askForInput(retirementAgeQuestion);
+            }
+            catch
+            {
+                Console.WriteLine("Cannot parse");
+                return;
+            }
 
             DateTime localDate = DateTime.Now;
 
@@ -18,37 +29,23 @@ namespace zoe_2_6
             int remainingYear = retirementAge - age;
             int retirementYear = thisYear + remainingYear;
 
-            
-            if(age >= retirementAge)
+            if(remainingYear <= 0)
             {
                 Console.WriteLine("Wow! you have been retired!");
-            } else { 
-
+            }
+            else
+            { 
                 string answer = $"You have {remainingYear} years left until you can retire.\nIt's {thisYear}, so you can retire in {retirementYear}.";
 
                 Console.WriteLine(answer);
-
             }
         }
 
         private static int askForInput(string question)
         {
-            int number = 0;
-
             Console.Write(question);
 
-            string input = Console.ReadLine();
-
-            try
-            {
-                number = Int32.Parse(input);
-            }
-            catch (FormatException)
-            {
-                Console.WriteLine($"Unable to parse '{input}'");
-            }
-
-            return number;
+            return Int32.Parse(Console.ReadLine());
         }
     }
 }
