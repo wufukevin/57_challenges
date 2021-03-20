@@ -24,8 +24,12 @@ class Painter(object):
             f'You will need to purchase {number_of_gallons} gallons of paint to cover {self.area} square feet.')
 
 
-def given_input_length_and_width(mock_input, input):
-    mock_input.side_effect = input
+def given_input_length_and_width(mock_input, expected_input):
+    mock_input.side_effect = expected_input
+
+
+def result_should_be(mock_print, expected_result):
+    mock_print.assert_called_with(expected_result)
 
 
 class MyTestCase(unittest.TestCase):
@@ -43,9 +47,12 @@ class MyTestCase(unittest.TestCase):
     def test_calculate(self, mock_input, mock_print):
         given_input_length_and_width(mock_input, ['20', '18'])
         self.painter.ask_for_length_and_width()
-        self.assertEqual(360, self.painter.area_to_paint())
+        self.area_to_paint_should_be(360)
         self.painter.calculate_gallons()
-        mock_print.assert_called_with('You will need to purchase 2 gallons of paint to cover 360 square feet.')
+        result_should_be(mock_print, 'You will need to purchase 2 gallons of paint to cover 360 square feet.')
+
+    def area_to_paint_should_be(self, expected_area):
+        self.assertEqual(expected_area, self.painter.area_to_paint())
 
     def length_and_width_should_be(self, length, width):
         self.assertEqual(length, self.painter.length)
