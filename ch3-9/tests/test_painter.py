@@ -60,6 +60,12 @@ class MyTestCase(unittest.TestCase):
         with self.assertRaises(Exception):
             self.painter.ask_for_length_and_width()
 
+    @patch('builtins.input')
+    def test_ask_input_round_room(self, mock_input):
+        mock_input.return_value = '60'
+        self.painter.ask_for_input_radius()
+        self.assertEqual(60, self.painter.radius)
+
     def area_to_paint_should_be(self, expected_area):
         self.assertEqual(expected_area, self.painter.area_to_paint())
 
