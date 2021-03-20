@@ -1,5 +1,8 @@
 import unittest
+from math import ceil
 from unittest.mock import patch
+
+PAINTABLE_AREA_IN_FEET_PER_GALLON = 350
 
 
 class Painter(object):
@@ -10,6 +13,15 @@ class Painter(object):
     def ask_for_length_and_width(self):
         self.length = int(input('Please input length: '))
         self.width = int(input('Please input width: '))
+
+    def area_to_paint(self):
+        self.area = self.width * self.length
+        return self.area
+
+    def calculate_gallons(self):
+        number_of_gallons = ceil(self.area / PAINTABLE_AREA_IN_FEET_PER_GALLON)
+        print(
+            f'You will need to purchase {number_of_gallons} gallons of paint to cover {self.area} square feet.')
 
 
 def given_input_length_and_width(mock_input, input):
