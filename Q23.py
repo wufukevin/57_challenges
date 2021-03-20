@@ -19,15 +19,16 @@ questionAndAnswer = {
 }
 
 def yesOrNO(input):
-    if input== 'y' or input == 'n':
-        return True
-    print('Please enter a number!')
-    return False
+    inputCorrect = input.lower()== 'y' or input.lower() == 'n'
+    if not inputCorrect:
+        print('Please enter a number!')
+    return inputCorrect
 
 while True:
     input_ans = rf.InputFunction(questionAndAnswer[ansString][1], 1, yesOrNO)
-    ans = '1' if input_ans == 'y' else '0'
+    ans = '1' if input_ans.lower() == 'y' else '0'
     ansString = ansString + ans
-    if questionAndAnswer[ansString][0] == 'a':
+    questionHasAnswer = questionAndAnswer[ansString][0] == 'a'
+    if questionHasAnswer:
         print(questionAndAnswer[ansString][1])
         break

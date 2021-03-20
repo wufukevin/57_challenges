@@ -19,15 +19,15 @@ numberToMonth = {
 def IsMonthNum(Parameter):
     try:
         intParameter = int(Parameter)
-        if intParameter < 1 or intParameter > 12:
+        isValidMonth = intParameter >= 1  and intParameter <= 12
+        if not isValidMonth:
             print('Please enter a number between 1 and 12.')
-            return False
-        return True
+        return isValidMonth
     except Exception as ex :
         print('Please enter a number!')
         return False
 
-input_monthNumber = rf.InputFunction('Please enter the number of the month: ', 1, IsMonthNum)
-month = numberToMonth[input_monthNumber]
+inputMonthNumber = rf.InputFunction('Please enter the number of the month: ', 1, IsMonthNum)
+month = numberToMonth[inputMonthNumber]
 
 print(f'The name of the month is {month}.')

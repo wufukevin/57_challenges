@@ -5,10 +5,12 @@ print('Enter two strings and I\'ll tell you if they are anagrams: ')
 print('')
 
 def IsAnagram(FirstString, SecondString):
-    if len(FirstString) != len(SecondString):
+    stringLen = len(FirstString)
+    if stringLen != len(SecondString):
         return False
-    for char_1 , char_2 in zip(FirstString, reversed(SecondString)):
-        if char_1 != char_2:
+    for indexFromHead in range(stringLen):
+        indexFromTail = stringLen - indexFromHead - 1
+        if FirstString[indexFromHead] != SecondString[indexFromTail]:
             return False
     return True
 
