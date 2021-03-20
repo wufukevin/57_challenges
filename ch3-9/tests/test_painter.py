@@ -26,6 +26,15 @@ class MyTestCase(unittest.TestCase):
         self.painter.ask_for_length_and_width()
         self.length_and_width_should_be(20, 18)
 
+    @patch('builtins.print')
+    @patch('builtins.input')
+    def test_calculate(self, mock_input, mock_print):
+        given_input_length_and_width(mock_input, ['20', '18'])
+        self.painter.ask_for_length_and_width()
+        self.assertEqual(360, self.painter.area_to_paint())
+        self.painter.calculate_gallons()
+        mock_print.assert_called_with('You will need to purchase 2 gallons of paint to cover 360 square feet.')
+
     def length_and_width_should_be(self, length, width):
         self.assertEqual(length, self.painter.length)
         self.assertEqual(width, self.painter.width)
