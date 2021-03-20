@@ -9,6 +9,7 @@ class Painter(object):
     def __init__(self):
         self.width = None
         self.length = None
+        self.radius = None
 
     def ask_for_length_and_width(self):
         self.length = int(input('Please input length: '))
@@ -22,6 +23,9 @@ class Painter(object):
         number_of_gallons = ceil(self.area / PAINTABLE_AREA_IN_FEET_PER_GALLON)
         print(
             f'You will need to purchase {number_of_gallons} gallons of paint to cover {self.area} square feet.')
+
+    def ask_for_input_radius(self):
+        self.radius = int(input('Please input room radius: '))
 
 
 def given_input_length_and_width(mock_input, expected_input):
@@ -62,9 +66,15 @@ class MyTestCase(unittest.TestCase):
 
     @patch('builtins.input')
     def test_ask_input_round_room(self, mock_input):
-        mock_input.return_value = '60'
+        self.given_input_radius(mock_input)
         self.painter.ask_for_input_radius()
-        self.assertEqual(60, self.painter.radius)
+        self.radius_should_be(60)
+
+    def radius_should_be(self, expected_radius):
+        self.assertEqual(expected_radius, self.painter.radius)
+
+    def given_input_radius(self, mock_input):
+        mock_input.return_value = '60'
 
     def area_to_paint_should_be(self, expected_area):
         self.assertEqual(expected_area, self.painter.area_to_paint())
