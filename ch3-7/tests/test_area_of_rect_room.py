@@ -1,7 +1,7 @@
 import unittest
 from unittest.mock import patch
 
-from ch3_1.area_of_room import RoomArea
+from ch3_7.area_of_room import RoomArea
 
 
 def summary_should_be(mock_print, summary):
