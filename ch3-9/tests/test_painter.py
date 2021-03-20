@@ -51,6 +51,15 @@ class MyTestCase(unittest.TestCase):
         self.painter.calculate_gallons()
         result_should_be(mock_print, 'You will need to purchase 2 gallons of paint to cover 360 square feet.')
 
+    @patch('builtins.input')
+    def test_given_not_numeric_input(self, mock_input):
+        given_input_length_and_width(mock_input, ['a', '18'])
+        with self.assertRaises(Exception):
+            self.painter.ask_for_length_and_width()
+        given_input_length_and_width(mock_input, ['20', 'a'])
+        with self.assertRaises(Exception):
+            self.painter.ask_for_length_and_width()
+
     def area_to_paint_should_be(self, expected_area):
         self.assertEqual(expected_area, self.painter.area_to_paint())
 
