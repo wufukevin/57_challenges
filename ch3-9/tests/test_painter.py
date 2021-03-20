@@ -12,14 +12,23 @@ class Painter(object):
         self.width = int(input('Please input width: '))
 
 
+def given_input_length_and_width(mock_input, input):
+    mock_input.side_effect = input
+
+
 class MyTestCase(unittest.TestCase):
+    def setUp(self):
+        self.painter = Painter()
+
     @patch('builtins.input')
     def test_ask_length_and_width(self, mock_input):
-        painter = Painter()
-        mock_input.side_effect = ['20', '18']
-        painter.ask_for_length_and_width()
-        self.assertEqual(20, painter.length)
-        self.assertEqual(18, painter.width)
+        given_input_length_and_width(mock_input, ['20', '18'])
+        self.painter.ask_for_length_and_width()
+        self.length_and_width_should_be(20, 18)
+
+    def length_and_width_should_be(self, length, width):
+        self.assertEqual(length, self.painter.length)
+        self.assertEqual(width, self.painter.width)
 
 
 if __name__ == '__main__':
