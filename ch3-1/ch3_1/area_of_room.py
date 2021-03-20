@@ -16,6 +16,7 @@ class RoomArea(object):
             raise Exception()
 
     def summary(self):
+        self.area = int(self.length) * int(self.width)
         area_in_feet = self.areasInFeet()
         area_in_meters = self.areaInMeter()
         print(
@@ -28,12 +29,12 @@ class RoomArea(object):
 
     def areaInMeter(self):
         if self.unit == 'feet':
-            return f'{int(self.length) * int(self.width) * FEET_TO_METER_RATE:.3f}'
+            return f'{self.area * FEET_TO_METER_RATE:.3f}'
         else:
-            return f'{int(self.length) * int(self.width)}'
+            return f'{self.area}'
 
     def areasInFeet(self):
         if self.unit == 'feet':
-            return f'{int(self.length) * int(self.width)}'
+            return f'{self.area}'
         else:
-            return f'{int(self.length) * int(self.width) / FEET_TO_METER_RATE:.3f}'
+            return f'{self.area / FEET_TO_METER_RATE:.3f}'
