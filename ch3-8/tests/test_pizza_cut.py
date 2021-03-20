@@ -1,7 +1,7 @@
 import unittest
 from unittest.mock import patch
 
-from ch3_2.pizza_cut import PizzaParty
+from ch3_8.pizza_cut import PizzaParty
 
 
 def given_function(mock_input, function):
