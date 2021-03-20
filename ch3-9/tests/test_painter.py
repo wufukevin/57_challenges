@@ -36,6 +36,10 @@ def result_should_be(mock_print, expected_result):
     mock_print.assert_called_with(expected_result)
 
 
+def given_input_radius(mock_input, input_radius):
+    mock_input.return_value = input_radius
+
+
 class MyTestCase(unittest.TestCase):
     def setUp(self):
         self.painter = Painter()
@@ -66,15 +70,20 @@ class MyTestCase(unittest.TestCase):
 
     @patch('builtins.input')
     def test_ask_input_round_room(self, mock_input):
-        self.given_input_radius(mock_input)
+        given_input_radius(mock_input, '60')
         self.painter.ask_for_input_radius()
         self.radius_should_be(60)
 
+    @patch('builtins.print')
+    @patch('builtins.input')
+    def test_calculate_round_room(self, mock_input, mock_print):
+        given_input_radius(mock_input, '10')
+        self.painter.ask_for_input_radius()
+        self.painter.calculate_gallons_for_round_room()
+        mock_print.assert_called_with('You will need to purchase 1 gallons of paint to cover 314 square feet.')
+
     def radius_should_be(self, expected_radius):
         self.assertEqual(expected_radius, self.painter.radius)
-
-    def given_input_radius(self, mock_input):
-        mock_input.return_value = '60'
 
     def area_to_paint_should_be(self, expected_area):
         self.assertEqual(expected_area, self.painter.area_to_paint())
