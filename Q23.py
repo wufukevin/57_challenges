@@ -18,8 +18,8 @@ questionAndAnswer = {
     '000011': ['a', ' Get it in for service.'],
 }
 
-def yesOrNO(Parameter):
-    if Parameter=='y' or Parameter == 'n':
+def yesOrNO(input):
+    if input== 'y' or input == 'n':
         return True
     print('Please enter a number!')
     return False
