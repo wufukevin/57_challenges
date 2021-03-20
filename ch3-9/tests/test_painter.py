@@ -1,28 +1,7 @@
 import unittest
-from math import ceil, pi
 from unittest.mock import patch
 
-PAINTABLE_AREA_IN_FEET_PER_GALLON = 350
-
-
-class Painter(object):
-    def __init__(self):
-        self.width = None
-        self.length = None
-        self.radius = None
-
-    def ask_for_input(self):
-        self.length = int(input('Please input length: '))
-        self.width = int(input('Please input width: '))
-
-    def area_to_paint(self):
-        self.area = self.width * self.length
-        return self.area
-
-    def calculate_gallons(self):
-        number_of_gallons = ceil(self.area / PAINTABLE_AREA_IN_FEET_PER_GALLON)
-        print(
-            f'You will need to purchase {number_of_gallons} gallons of paint to cover {self.area} square feet.')
+from ch3_9.painter import Painter, get_painter, ask_for_painter, LShaprePainter, RoundPainter
 
 
 def given_input_length_and_width(mock_input, expected_input):
@@ -37,22 +16,24 @@ def given_input_radius(mock_input, input_radius):
     mock_input.return_value = input_radius
 
 
-class RoundPainter(Painter):
-    def ask_for_input(self):
-        self.radius = int(input('Please input the radius of the round room: '))
+def given_L_shape_length_and_width(mock_input, input_L_shape_length_and_width):
+    mock_input.side_effect = input_L_shape_length_and_width
 
-    def area_to_paint(self):
-        self.area = int(pow(self.radius, 2) * pi)
-        return self.area
+
+def given_painter_choice(mock_input, painter):
+    mock_input.return_value = painter
 
 
 class MyTestCase(unittest.TestCase):
     def setUp(self):
-        self.round_painter = RoundPainter()
-        self.painter = Painter()
+        self.l_shape_painter_option = '3'
+        self.round_painter_option = '2'
+        self.painter_option = '1'
 
     @patch('builtins.input')
     def test_ask_length_and_width(self, mock_input):
+        given_painter_choice(mock_input, self.painter_option)
+        self.painter = get_painter(ask_for_painter())
         given_input_length_and_width(mock_input, ['20', '18'])
         self.painter.ask_for_input()
         self.length_and_width_should_be(20, 18)
@@ -60,6 +41,8 @@ class MyTestCase(unittest.TestCase):
     @patch('builtins.print')
     @patch('builtins.input')
     def test_calculate(self, mock_input, mock_print):
+        given_painter_choice(mock_input, self.painter_option)
+        self.painter = get_painter(ask_for_painter())
         given_input_length_and_width(mock_input, ['20', '18'])
         self.painter.ask_for_input()
         self.area_to_paint_should_be(360)
@@ -77,23 +60,54 @@ class MyTestCase(unittest.TestCase):
 
     @patch('builtins.input')
     def test_ask_input_round_room(self, mock_input):
+        given_painter_choice(mock_input, self.round_painter_option)
+        self.painter = get_painter(ask_for_painter())
         given_input_radius(mock_input, '60')
-        self.painter = RoundPainter()
-        self.round_painter.ask_for_input()
+        self.painter.ask_for_input()
         self.radius_should_be(60)
 
     @patch('builtins.print')
     @patch('builtins.input')
     def test_calculate_round_room(self, mock_input, mock_print):
+        given_painter_choice(mock_input, self.round_painter_option)
+        self.painter = get_painter(ask_for_painter())
         given_input_radius(mock_input, '10')
-        self.painter = RoundPainter()
         self.painter.ask_for_input()
         self.area_to_paint_should_be(314)
         self.painter.calculate_gallons()
         mock_print.assert_called_with('You will need to purchase 1 gallons of paint to cover 314 square feet.')
 
+    @patch('builtins.print')
+    @patch('builtins.input')
+    def test_calculate_L_shape_room(self, mock_input, mock_print):
+        given_painter_choice(mock_input, self.l_shape_painter_option)
+        self.painter = get_painter(ask_for_painter())
+        given_L_shape_length_and_width(mock_input, ['10', '20', '5', '10'])
+        self.painter.ask_for_input()
+        self.area_to_paint_should_be(250)
+        self.painter.calculate_gallons()
+        mock_print.assert_called_with('You will need to purchase 1 gallons of paint to cover 250 square feet.')
+
+    @patch('builtins.input')
+    def test_ask_painter(self, mock_input):
+        given_painter_choice(mock_input, self.painter_option)
+        self.chosen_painter = ask_for_painter()
+        painter = get_painter(self.chosen_painter)
+        self.painter_type_should_be(painter, Painter)
+        given_painter_choice(mock_input, self.round_painter_option)
+        self.chosen_painter = ask_for_painter()
+        painter = get_painter(self.chosen_painter)
+        self.painter_type_should_be(painter, RoundPainter)
+        given_painter_choice(mock_input, self.l_shape_painter_option)
+        self.chosen_painter = ask_for_painter()
+        painter = get_painter(self.chosen_painter)
+        self.painter_type_should_be(painter, LShaprePainter)
+
+    def painter_type_should_be(self, painter, expected_type):
+        self.assertIsInstance(painter, expected_type)
+
     def radius_should_be(self, expected_radius):
-        self.assertEqual(expected_radius, self.round_painter.radius)
+        self.assertEqual(expected_radius, self.painter.radius)
 
     def area_to_paint_should_be(self, expected_area):
         self.assertEqual(expected_area, self.painter.area_to_paint())
