@@ -1,36 +1,38 @@
 import unittest
 from unittest.mock import patch
 
-
-def ask_for_continue():
-    more_price_and_quantity = input('More price and quantity? (y/N)')
-    return more_price_and_quantity.lower() == 'y'
+from ch3_10.self_checkout import ask_for_continue, SelfCheckOut
 
 
-class SelfCheckOut(object):
-    def __init__(self):
-        self.items = []
+def given_price_and_quantity(mock_input, price_and_quantity):
+    mock_input.side_effect = price_and_quantity
 
-    def ask_for_price_and_quantity(self):
-        price = int(input('Enter the price of item 1: '))
-        quantity = int(input('Enter the quantity of item 1: '))
-        self.items.append({'price': price, 'quantity': quantity})
 
-    def items_count(self):
-        return len(self.items)
+def given_continue_input_price_and_quantity(mock_input, continue_or_not):
+    mock_input.reset_mock(return_value=True, side_effect=True)
+    mock_input.return_value = continue_or_not
 
 
 class MyTestCase(unittest.TestCase):
+    def setUp(self):
+        self.checker = SelfCheckOut()
+
     @patch('builtins.input')
     def test_ask_for_input(self, mock_input):
-        mock_input.side_effect = ['25', '2']
-        checker = SelfCheckOut()
-        checker.ask_for_price_and_quantity()
-        mock_input.reset_mock(return_value=True, side_effect=True)
-        mock_input.return_value = 'n'
-        continue_or_not = ask_for_continue()
+        given_price_and_quantity(mock_input, ['25', '2'])
+        self.when_ask_for_input_price_and_quantity()
+        given_continue_input_price_and_quantity(mock_input, 'n')
+        self.should_continue(ask_for_continue())
+        self.items_should_has_count(1)
+
+    def items_should_has_count(self, expected_count):
+        self.assertEqual(expected_count, self.checker.items_count())
+
+    def should_continue(self, continue_or_not):
         self.assertEqual(False, continue_or_not)
-        self.assertEqual(1, checker.items_count())
+
+    def when_ask_for_input_price_and_quantity(self):
+        self.checker.ask_for_price_and_quantity()
 
 
 if __name__ == '__main__':
