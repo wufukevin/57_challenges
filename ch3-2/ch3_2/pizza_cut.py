@@ -1,3 +1,6 @@
+import math
+
+
 class PizzaParty(object):
     def ask_for_function(self):
         self.function = input("Select Pizza Party Function: Cut Or Count")
@@ -48,7 +51,7 @@ class PizzaParty(object):
 
     def total_pizza(self):
         total_pieces = int(self.pieces) * int(self.people)
-        return int(total_pieces / PIECES_PER_PIZZA) + (1 if total_pieces % PIECES_PER_PIZZA > 0 else 0)
+        return math.ceil(total_pieces / PIECES_PER_PIZZA)
 
 
 PIECES_PER_PIZZA = 8
