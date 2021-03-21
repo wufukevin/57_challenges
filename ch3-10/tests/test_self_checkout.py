@@ -68,9 +68,39 @@ class MyTestCase(unittest.TestCase):
         given_continue_input_price_and_quantity(mock_input, 'n')
         self.should_not_continue(ask_for_continue())
         self.checker.checkout()
-        self.assertEqual('64.00', self.checker.subtotal)
-        self.assertEqual('3.52', self.checker.tax)
-        self.assertEqual('67.52', self.checker.total)
+        self.subtotal_should_be(64)
+        self.tax_should_be(3.52)
+        self.total_should_be(67.52)
+
+    @patch('builtins.print')
+    @patch('builtins.input')
+    def test_report(self, mock_input, mock_print):
+        given_price_and_quantity(mock_input, ['25', '2'])
+        self.when_ask_for_input_price_and_quantity()
+        given_continue_input_price_and_quantity(mock_input, 'y')
+        self.assertEqual(True, ask_for_continue())
+        given_price_and_quantity(mock_input, ['10', '1'])
+        self.when_ask_for_input_price_and_quantity()
+        given_continue_input_price_and_quantity(mock_input, 'y')
+        self.assertEqual(True, ask_for_continue())
+        given_price_and_quantity(mock_input, ['4', '1'])
+        self.when_ask_for_input_price_and_quantity()
+        given_continue_input_price_and_quantity(mock_input, 'n')
+        self.should_not_continue(ask_for_continue())
+        self.checker.checkout()
+        self.checker.report()
+        mock_print.assert_has_calls(
+            [call('Total of 2 Item 1 is 50'), call('Total of 1 Item 2 is 10'), call('Total of 1 Item 3 is 4'),
+             call('Subtotal: $64.00'), call('Tax: $3.52'), call('Total: $67.52')])
+
+    def total_should_be(self, expected_total):
+        self.assertEqual(expected_total, self.checker.total)
+
+    def tax_should_be(self, expected_tax):
+        self.assertEqual(expected_tax, self.checker.tax)
+
+    def subtotal_should_be(self, expected_subtotal):
+        self.assertEqual(expected_subtotal, self.checker.subtotal)
 
     def items_should_has_count(self, expected_count):
         self.assertEqual(expected_count, self.checker.items_count())
