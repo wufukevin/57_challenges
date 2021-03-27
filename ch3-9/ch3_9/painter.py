@@ -14,9 +14,9 @@ class Painter(object):
 
     def area_to_paint(self):
         self.area = self.width * self.length
-        return self.area
 
     def calculate_gallons(self):
+        self.area_to_paint()
         number_of_gallons = ceil(self.area / PAINTABLE_AREA_IN_FEET_PER_GALLON)
         print(
             f'You will need to purchase {number_of_gallons} gallons of paint to cover {self.area} square feet.')
@@ -57,7 +57,6 @@ class LShaprePainter(Painter):
 
     def area_to_paint(self):
         self.area = int(self.first_width * self.first_length + self.second_width * self.second_length)
-        return self.area
 
 
 class RoundPainter(Painter):
@@ -66,4 +65,9 @@ class RoundPainter(Painter):
 
     def area_to_paint(self):
         self.area = int(pow(self.radius, 2) * pi)
-        return self.area
+
+
+if __name__ == '__main__':
+    painter = get_painter(ask_for_painter())
+    painter.ask_for_input()
+    painter.calculate_gallons()

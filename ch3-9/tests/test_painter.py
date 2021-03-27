@@ -1,4 +1,5 @@
 import unittest
+from math import pi
 from unittest.mock import patch
 
 from ch3_9.painter import Painter, get_painter, ask_for_painter, LShaprePainter, RoundPainter
@@ -84,8 +85,8 @@ class MyTestCase(unittest.TestCase):
         self.painter = get_painter(ask_for_painter())
         given_L_shape_length_and_width(mock_input, ['10', '20', '5', '10'])
         self.painter.ask_for_input()
-        self.area_to_paint_should_be(250)
         self.painter.calculate_gallons()
+        self.area_to_paint_should_be(250)
         mock_print.assert_called_with('You will need to purchase 1 gallons of paint to cover 250 square feet.')
 
     @patch('builtins.input')
@@ -103,6 +104,16 @@ class MyTestCase(unittest.TestCase):
         painter = get_painter(self.chosen_painter)
         self.painter_type_should_be(painter, LShaprePainter)
 
+    @patch('builtins.print')
+    @patch('builtins.input')
+    def test_auto_count_area(self, mock_input, mock_print):
+        given_painter_choice(mock_input, self.l_shape_painter_option)
+        self.painter = get_painter(ask_for_painter())
+        given_L_shape_length_and_width(mock_input, ['10', '20', '5', '10'])
+        self.painter.ask_for_input()
+        self.painter.calculate_gallons()
+        mock_print.assert_called_with('You will need to purchase 1 gallons of paint to cover 250 square feet.')
+
     def painter_type_should_be(self, painter, expected_type):
         self.assertIsInstance(painter, expected_type)
 
@@ -110,7 +121,7 @@ class MyTestCase(unittest.TestCase):
         self.assertEqual(expected_radius, self.painter.radius)
 
     def area_to_paint_should_be(self, expected_area):
-        self.assertEqual(expected_area, self.painter.area_to_paint())
+        self.assertEqual(expected_area, self.painter.area)
 
     def length_and_width_should_be(self, length, width):
         self.assertEqual(length, self.painter.length)
