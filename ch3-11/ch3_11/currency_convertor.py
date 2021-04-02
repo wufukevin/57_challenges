@@ -38,7 +38,6 @@ class CurrencyConvertor(object):
 
 if __name__ == '__main__':
     convertor = CurrencyConvertor()
+    convertor.load_supported_currencies()
     question = AskQuestion(convertor)
     question.ask()
-    print(f'')
-    print(convertor.convert())
