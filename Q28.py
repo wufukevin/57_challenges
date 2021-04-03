@@ -4,20 +4,22 @@ import re
 
 
 class InputData:
-    def __init__(self):
-        self.inputTimes = int(rf.InputFunction('How many number you want to enter?: ',1,rf.isInteger))
-        self.inputList = []
-        for i in range(self.inputTimes):
-            inputNumber = int(rf.InputFunction('Enter a number: ',1,rf.isInteger))
-            self.inputList.append(inputNumber)
+    def __init__(self, inputList):
+        self.inputList = inputList
+
+    @classmethod
+    def fromInput(cls):
+        inputTime = int(rf.InputFunction('How many number you want to enter?: ',1,rf.isInteger))
+        inputList = []
+        for i in range(inputTime):
+            inputNumber = int(rf.InputFunction('Enter a number: ', 1, rf.isInteger))
+            inputList.append(inputNumber)
+        return cls(
+            inputList
+        )
 
     def total(self):
-        total = 0
-        for number in self.inputList:
-            total += number
-        return total
+        print(f'The total is {sum(self.inputList)}.')
 
 
-mainFunction = InputData()
-total = mainFunction.total()
-print(f'The total is {total}.')
+InputData.fromInput().total()

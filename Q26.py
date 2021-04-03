@@ -9,7 +9,7 @@ class CreditCard:
         self.monthlPayment = int(monthlPayment)
 
     @classmethod
-    def from_input(cls):
+    def fromInput(cls):
         return cls(
             rf.InputFunction('What is your balance? ',1,rf.isInteger),
             rf.InputFunction('What is the APR on the card (as a percent)? ',1,rf.isInteger),
@@ -28,5 +28,5 @@ class CreditCard:
     def printAns(self):
         print(f'It will take you {self.monthsToPayOff()} months to pay off this card.')
 
-user = CreditCard.from_input()
+user = CreditCard.fromInput()
 user.printAns()

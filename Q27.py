@@ -2,13 +2,33 @@ import RegulationFunction as rf
 import math
 import re
 
+class Validator:
+    def __init__(self, name, value, regex, failMessage):
+        self.name = name
+        self.value = value
+        self.regex = regex
+        self.failMessage = failMessage
 
-class InputData:
+    def validate(self):
+        ans = True
+        if self.value == '':
+            print(f"The {self.name} must be filled in.")
+            ans = False
+        elif not re.fullmatch(self.regex, self.value):
+            print(self.failMessage)
+            ans = False
+        return ans
+
+
+class UserInfo:
     def __init__(self, firstName, lastName, zipCode, employeeID):
-        self.inputList = [firstName, lastName, zipCode, employeeID]
+        self.inputList = [Validator('first name', firstName, r"[a-zA-Z]{2,}", f"{firstName} is not a valid first name. It is too short."),
+                          Validator('last name', lastName, r"[a-zA-Z]{2,}", f"{lastName} is not a valid last name. It is too short."),
+                          Validator('zipCode', zipCode, r"[0-9]+", f'The ZIP code must be numeric.'),
+                          Validator('employeeID', employeeID, r"[a-zA-Z]{2}-[0-9]{4}", f'{employeeID} is not a valid ID.')]
 
     @classmethod
-    def from_input(cls):
+    def fromInput(cls):
         return cls(
             rf.InputFunction('Enter the first name: '),
             rf.InputFunction('Enter the last name: '),
@@ -18,29 +38,14 @@ class InputData:
 
     def validateInput(self):
         noError = True
-        namePattern = r"[a-zA-Z]{2,}"
-        zipPattern = r"[0-9]+"
-        idPattern = r"[a-zA-Z]{2}-[0-9]{4}"
-
-        patternList = [namePattern,namePattern,zipPattern,idPattern]
-        inputName = ['first name', 'last name', 'zipCode', 'employeeID']
-        for i, inputString in enumerate(self.inputList):
-            if inputString:
-                if not re.fullmatch(patternList[i], inputString):
-                    noError = False
-                    if i < 2:
-                        print(f"\"{inputString}\" is not a valid {inputName[i]}. It is too short.")
-                    elif i == 2:
-                        print(f'The ZIP code must be numeric.')
-                    else:
-                        print(f'{inputString} is not a valid ID.')
-            else:
+        for i in self.inputList:
+            if not i.validate():
                 noError = False
-                print(f"The {inputName[i]} must be filled in.")
 
         if noError:
             print('There were no errors found.')
 
 
-mainFunction = InputData.from_input()
-mainFunction.validateInput()
+userInfo = UserInfo.fromInput()
+userInfo.validateInput()
+
