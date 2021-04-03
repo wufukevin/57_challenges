@@ -26,7 +26,7 @@ class InputData:
     def targetHeartRate(self, intensity):
         return round((220-self.age-self.restingPulse)*intensity/100 + self.restingPulse)
 
-    def show(self):
+    def showInTable(self):
         fig, ax = plt.subplots()
 
         # hide axes
@@ -40,11 +40,11 @@ class InputData:
         fig.tight_layout()
         plt.show()
 
-    def show01(self):
+    def showInTerminal(self):
         print('Intensity  | Rate')
         print('-----------|------')
         for row in self.data:
             print(f'{row[0]}        | {row[1]}')
 
 mainFunction = InputData.from_input()
-mainFunction.show01()
+mainFunction.showInTable()
