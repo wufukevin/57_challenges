@@ -15,26 +15,36 @@ namespace zoe_3_10
       {
         allProduct.Add(ScanProduct(times));
         times++;
+
       } while (times < 4);
 
 
       PrintReciept(allProduct);
     }
-
     public static ProductDetail ScanProduct(int index)
     {
       var priceQuestion = $"Enter the price: ";
       var quantityQuestion = $"Enter the quantity: ";
 
       Console.WriteLine($"------ item {index} ------");
-      var price = ConsoleUtil.AskForInputDouble(priceQuestion);
-      var quantity = ConsoleUtil.AskForInputDouble(quantityQuestion);
 
-      return new ProductDetail()
+      try
       {
-        Price = price,
-        Quantity = quantity
-      };
+        var price = ConsoleUtil.AskForInputDouble(priceQuestion);
+        var quantity = ConsoleUtil.AskForInputDouble(quantityQuestion);
+
+        return new ProductDetail()
+        {
+          Price = price,
+          Quantity = quantity
+        };
+      }
+      catch (Exception ex)
+      {
+        Console.WriteLine(ex);
+        return new ProductDetail();
+      }
+
     }
 
     public static void PrintReciept(List<ProductDetail> allProduct)
