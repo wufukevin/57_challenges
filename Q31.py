@@ -17,7 +17,7 @@ class InputData:
             self.data[i][1] = f'{self.targetHeartRate(intensity)} bpm'
 
     @classmethod
-    def from_input(cls):
+    def fromInput(cls):
         return cls(
             rf.InputFunction('Resting Pulse: ',1, rf.isInteger),
             rf.InputFunction('Age: ',1, rf.isInteger)
@@ -46,5 +46,5 @@ class InputData:
         for row in self.data:
             print(f'{row[0]}        | {row[1]}')
 
-mainFunction = InputData.from_input()
-mainFunction.showInTable()
+mainFunction = InputData.fromInput()
+mainFunction.showInTerminal()

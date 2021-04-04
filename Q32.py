@@ -6,19 +6,17 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
-def levelCheck(level):
+def levelCheckValidator(level):
     levelList = ['1','2','3']
     ansCorrect = True if level in levelList else False
     if not ansCorrect:
         print('Please enter correct level.')
     return ansCorrect
 
-def wantAgain(ans):
+def wantAgainValidator(ans):
     if ans != 'y' and ans != 'n':
         print("Please enter correct!!")
         return False
-    elif ans == 'n':
-        return True
     else:
         return True
 
@@ -50,15 +48,15 @@ class GuessNumber:
 
 
     @classmethod
-    def from_input(cls):
+    def fromInput(cls):
         print('Let\'s play Guess the Number.')
         return cls(
-            rf.InputFunction('Pick a difficulty level (1, 2, or 3): ',1, levelCheck),
+            rf.InputFunction('Pick a difficulty level (1, 2, or 3): ', 1, levelCheckValidator),
         )
 
     def Start(self):
         self.yourGuess = int(rf.InputFunction(self.sentence))
-        if self.yourGuess not in self.guessList:
+        if self.yourGuess not in self.guessList: # use set DS!!
             self.guessTime += 1
             self.guessList.append(self.yourGuess)
             if self.yourGuess > self.ans:
@@ -69,13 +67,13 @@ class GuessNumber:
                 print(f'You got it in {self.guessTime} guesses!')
                 comment = self.commentLevel.get(self.guessTime, 'terrible')
                 print(self.conclusion[comment])
-                again = rf.InputFunction('Play again? ',1,wantAgain)
+                again = rf.InputFunction('Play again? ', 1, wantAgainValidator)
                 if again == 'y':
                     self.again = True
                 return self.again
         else:
             self.sentence = 'You have guessed this number, try another one!'
-        self.Start()
+        return self.Start() #maybe overstack!!
         # if self.yourGuess not in self.guessList:
         #     if self.guessTime == 0:
         #         sentence = 'I have my number. What\'s your guess? '
@@ -96,10 +94,8 @@ class GuessNumber:
         #     sentence = 'You have guessed this number, try another one!'
         # self.Start()
 
-mainFunction = GuessNumber.from_input()
-mainFunction.Start()
-while mainFunction.again:
+mainFunction = GuessNumber.fromInput()
+while mainFunction.Start():
     print('New Game~~~~~')
-    mainFunction = GuessNumber.from_input()
-    mainFunction.Start()
+    mainFunction = GuessNumber.fromInput()
 print('Goodbye!!')

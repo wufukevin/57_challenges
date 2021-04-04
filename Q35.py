@@ -32,6 +32,6 @@ mainFunction = WinnerPicker()
 while not mainFunction.endOfSignUp:
     mainFunction.signUp()
 mainFunction.drawLot()
-# mainFunction.drawLot()
-# mainFunction.drawLot()
+mainFunction.drawLot()
+mainFunction.drawLot()
 
