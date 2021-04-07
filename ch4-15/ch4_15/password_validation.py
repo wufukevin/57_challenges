@@ -25,3 +25,9 @@ class PasswordValidator(object):
                 print('Welcome!')
             else:
                 print('I don\'t know you.')
+
+
+if __name__ == '__main__':
+    username, password = ask_input_for_question()
+    validator = PasswordValidator()
+    validator.validate(username, password)
