@@ -1,3 +1,5 @@
+from ch4_14.ask_input import ask_input_of_question
+
 TAX_IN_WISCONSIN = 0.55
 
 
@@ -11,3 +13,9 @@ class CheckTax(object):
             total += TAX_IN_WISCONSIN
 
         print(f'The total is ${total:.2f}.')
+
+
+if __name__ == '__main__':
+    amount, state = ask_input_of_question('4-14')
+    check_tax = CheckTax()
+    check_tax.check(amount, state)
