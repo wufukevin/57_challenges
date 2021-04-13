@@ -8,9 +8,17 @@ namespace zoe_3_10
     {
       ConsoleQuestion(question);
 
+      string input = Console.ReadLine();
+
+      // 空字串
+      if (input == "")
+      {
+        throw new InputEmptyStringException();
+      };
+
       try
       {
-        return Convert.ToDouble(Console.ReadLine());
+        return Convert.ToDouble(input);
       }
       catch
       {

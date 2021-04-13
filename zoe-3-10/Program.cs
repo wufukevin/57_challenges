@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace zoe_3_10
 {
-  partial class Program
+  class Program
   {
     static void Main()
     {
@@ -13,10 +13,16 @@ namespace zoe_3_10
 
       do
       {
-        allProduct.Add(ScanProduct(times));
-        times++;
-
-      } while (times < 4);
+        try
+        {
+          allProduct.Add(ScanProduct(times));
+          times++;
+        }
+        catch (InputEmptyStringException)
+        {
+          break;
+        }
+      } while (true);
 
 
       PrintReciept(allProduct);
@@ -28,23 +34,14 @@ namespace zoe_3_10
 
       Console.WriteLine($"------ item {index} ------");
 
-      try
-      {
-        var price = ConsoleUtil.AskForInputDouble(priceQuestion);
-        var quantity = ConsoleUtil.AskForInputDouble(quantityQuestion);
+      var price = ConsoleUtil.AskForInputDouble(priceQuestion);
+      var quantity = ConsoleUtil.AskForInputDouble(quantityQuestion);
 
-        return new ProductDetail()
-        {
-          Price = price,
-          Quantity = quantity
-        };
-      }
-      catch (Exception ex)
+      return new ProductDetail()
       {
-        Console.WriteLine(ex);
-        return new ProductDetail();
-      }
-
+        Price = price,
+        Quantity = quantity
+      };
     }
 
     public static void PrintReciept(List<ProductDetail> allProduct)
