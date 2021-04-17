@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net.Http;
 
 namespace zoe_3_11
 {
@@ -24,6 +25,8 @@ namespace zoe_3_11
         ConsoleUtil.ConsoleQuestion($"{countryIndex}) {country}");
         countryIndex++;
       }
+
+      CallExchangApi();
 
       // ask currency
       var rateFromQuestion = "what currency you want to exchange ? ";
@@ -51,6 +54,25 @@ namespace zoe_3_11
 
       ConsoleUtil.ConsoleAnswer(answer);
 
+    }
+
+    static readonly HttpClient client = new();
+
+    static async void CallExchangApi()
+    {
+      try
+      {
+        HttpResponseMessage response = await client.GetAsync("https://api.exchangerate-api.com/v4/latest/USD");
+        response.EnsureSuccessStatusCode();
+        string responseBody = await response.Content.ReadAsStringAsync();
+
+        Console.WriteLine(responseBody);
+      }
+      catch (HttpRequestException e)
+      {
+        Console.WriteLine("\nException Caught!");
+        Console.WriteLine("Message :{0} ", e.Message);
+      }
     }
 
     static double RoundUpPlaces(double value, int places)
