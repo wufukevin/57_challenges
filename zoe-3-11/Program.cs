@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace zoe_3_11
 {
@@ -6,16 +7,47 @@ namespace zoe_3_11
   {
     static void Main()
     {
-      var amountQuestion = "How many euros are you exchanging ? ";
-      var exchangeRateQuestion = "What is the exchange rate ? ";
+
+      Dictionary<string, double> USDExchangeRate = new()
+      {
+        { "USD (US)", 1 },
+        { "NTD (Taiwan)", 28.317289 },
+        { "JPY (Japen)", 108.752661 },
+        { "EUR (Euro)", 0.834641 },
+      };
+
+      var currcyList = new List<string>(USDExchangeRate.Keys);
+      int countryIndex = 0;
+
+      foreach (var country in currcyList)
+      {
+        ConsoleUtil.ConsoleQuestion($"{countryIndex}) {country}");
+        countryIndex++;
+      }
+
+      // ask currency
+      var rateFromQuestion = "what currency you want to exchange ? ";
+      var rateToQuestion = "what currency you want to exchange for ? ";
+
+      var currencyFrom = currcyList[ConsoleUtil.AskForInputInt(rateFromQuestion)];
+      var currencyTo = currcyList[ConsoleUtil.AskForInputInt(rateToQuestion)];
+
+      var rateFrom = USDExchangeRate[currencyFrom];
+      var rateTo = USDExchangeRate[currencyTo];
+
+      // ask amount
+      var amountQuestion = $"How much {currencyFrom} would you like to change ? ";
+      // var exchangeRateQuestion = "What is the exchange rate ? ";
 
       var amountFrom = ConsoleUtil.AskForInputDouble(amountQuestion);
-      var exchangeRate = ConsoleUtil.AskForInputDouble(exchangeRateQuestion);
+      // var exchangeRate = ConsoleUtil.AskForInputDouble(exchangeRateQuestion);
 
-      var result = amountFrom * exchangeRate;
+      // var result = amountFrom * exchangeRate;
+      var result = amountFrom * rateTo / rateFrom;
       var roundUpResult = RoundUpPlaces(result, 2);
 
-      var answer = $"{amountFrom} EUR X {exchangeRate} = {roundUpResult} USD ({result})";
+      // var answer = $"{amountFrom} EUR X {exchangeRate} = {roundUpResult} USD ({result})";
+      var answer = $"{amountFrom} {currencyFrom} X {rateTo / rateFrom} = {roundUpResult} {currencyTo}";
 
       ConsoleUtil.ConsoleAnswer(answer);
 

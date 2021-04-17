@@ -19,7 +19,7 @@ namespace zoe_3_11
         throw;
       }
     }
-    public static int AskForInputNumber(string question)
+    public static int AskForInputInt(string question)
     {
       ConsoleQuestion(question);
 
