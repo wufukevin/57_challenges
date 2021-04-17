@@ -31,7 +31,7 @@ class EmployeeData:
         con1 = self.data['Separation date'] >= open_day
         con2 = self.data['Separation date'] < close_day
         print(self.data[con1 & con2])
-        
+
 mainFunction = EmployeeData()
 mainFunction.nameSearch(rf.InputFunction('Enter the name to search: '))
 mainFunction.positionSearch(rf.InputFunction('Enter the position to search: '))
