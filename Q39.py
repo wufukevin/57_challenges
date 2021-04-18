@@ -1,3 +1,5 @@
+from enum import Enum
+
 import RegulationFunction as rf
 import numpy as np
 import math
@@ -5,6 +7,19 @@ import string
 import random
 import pandas as pd
 filePath = 'Q40_employeeData.csv'
+
+class SortMethod(Enum):
+    Separation = ('1', 'Separation date')
+    Position = ('2', 'Position')
+    Name = ('3', 'Name')
+
+    def fromValue(self, value):
+        if value == '1':
+            return SortMethod.Separation
+        elif value == '2':
+            return SortMethod.Position
+        else:
+            return SortMethod.Name
 
 def correctAnswer(ans):
     anslist = ['1','2','3']
@@ -22,20 +37,21 @@ class SortingRecords:
         self.data = self.data[['Name', 'Position', 'Separation date']]
 
 
-    def sortByLastname(self,sortedMethod):
-        if sortedMethod == '1':
-            self.data = self.data.sort_values(by=['Separation date'])
-        elif sortedMethod == '2':
-            self.data = self.data.sort_values(by=['Position'])
-        elif sortedMethod == '3':
-            self.data = self.data.sort_values(by=['Name'])
+    def sort(self, sortedMethod):
+        self.data = self.data.sort_values(by=[sortedMethod.value])
+        # if sortedMethod == SortMethod.Separation:
+        #     self.data = self.data.sort_values(by=[sortBy])
+        # elif sortedMethod == SortMethod.Position:
+        #     self.data = self.data.sort_values(by=['Position'])
+        # elif sortedMethod == SortMethod.Name:
+        #     self.data = self.data.sort_values(by=['Name'])
 
 
     def result(self):
         print('Before Sorting:')
         print(self.data)
         sortedMethod = rf.InputFunction('How to sort? 1)Separation date 2)position 3)last name',1, correctAnswer)
-        self.sortByLastname(sortedMethod)
+        self.sort(SortMethod.fromValue(sortedMethod))
         print('After Sorting')
         print(self.data)
 
