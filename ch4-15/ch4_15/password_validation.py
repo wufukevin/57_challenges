@@ -20,11 +20,10 @@ class PasswordValidator(object):
             print('I don\'t know you.')
             return
 
-        if username in self.credentials:
-            if bcrypt.checkpw(password.encode(), self.credentials[username]):
-                print('Welcome!')
-            else:
-                print('I don\'t know you.')
+        if bcrypt.checkpw(password.encode(), self.credentials[username]):
+            print('Welcome!')
+        else:
+            print('I don\'t know you.')
 
 
 if __name__ == '__main__':
