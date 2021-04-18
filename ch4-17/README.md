@@ -10,8 +10,7 @@ where
 – 0.73 for men
 – 0.66 for women
 • H is number of hours since the last drink.
-Display whether or not it’s legal to drive by comparing the
-blood alcohol content to 0.08.
+Display whether or not it’s legal to drive by comparing the blood alcohol content to 0.08.
 
 Example Output
 Your BAC is 0.08
