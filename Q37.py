@@ -10,10 +10,6 @@ class PasswordGenerator:
         self.minlength = int(minlength)
         self.punctuationNumber = int(punctuationNumber)
         self.digitsNumber = int(digitsNumber)
-        self.asciiLettersList = []
-        self.punctuationList = []
-        self.digitsList = []
-
 
     @classmethod
     def fromInput(cls):
@@ -24,33 +20,33 @@ class PasswordGenerator:
         )
 
     def asciiLettersUsed(self, number):
+        list = []
         for i in range(number):
-            self.asciiLettersList.append(random.choice(string.ascii_letters))
-    def punctuationUsed(self, number):
-        for i in range(number):
-            self.punctuationList.append(random.choice(string.punctuation))
-    def digitsUsed(self, number):
-        for i in range(number):
-            self.digitsList.append(random.choice(string.digits))
+            list.append(random.choice(string.ascii_letters))
+        return list
 
-    def cleanList(self):
-        self.asciiLettersList = []
-        self.punctuationList = []
-        self.digitsList = []
+    def punctuationUsed(self, number):
+        list = []
+        for i in range(number):
+            list.append(random.choice(string.punctuation))
+        return list
+
+    def digitsUsed(self, number):
+        list = []
+        for i in range(number):
+            list.append(random.choice(string.digits))
+        return list
 
     def createPassword(self):
         passwordLength = self.minlength + random.randint(0, 3)
         asciiLettersNumber = passwordLength - self.punctuationNumber - self.digitsNumber
-        self.asciiLettersUsed(asciiLettersNumber)
-        self.punctuationUsed(self.punctuationNumber)
-        self.digitsUsed(self.digitsNumber)
-        materialList = self.asciiLettersList+self.punctuationList+self.digitsList
-        password = ''
-        # print(materialList)
-        for word in random.sample(materialList,len(materialList)):
-            password = password + word
-        print(password)
-        self.cleanList()
+        materialList = self.asciiLettersUsed(asciiLettersNumber) + self.punctuationUsed(
+            self.punctuationNumber) + self.digitsUsed(self.digitsNumber)
+        # password = ''
+        # for word in random.sample(materialList, len(materialList)):
+        #     password = password + word
+        print(''.join(word for word in random.sample(materialList, len(materialList))))
+        # print(password)
 
     def printPassword(self):
         print(f'Your password is')

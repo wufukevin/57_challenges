@@ -1,8 +1,8 @@
 Total of 7 names
 -----------------
 Johnson, Jim
-Jones, Chris
 Jones, Aaron
+Jones, Chris
 Ling, Mai
 Swift, Geoffrey
 Xiong, Fon

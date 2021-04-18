@@ -24,13 +24,13 @@ class EmployeeData:
 
     def sixMonthSearch(self, inputDateString):
         inputDate = pd.to_datetime(inputDateString)
-        open_day = inputDate - pd.DateOffset(months=6)
-        close_day = inputDate + pd.DateOffset(months=6)
-        print(open_day)
-        print(close_day)
-        con1 = self.data['Separation date'] >= open_day
-        con2 = self.data['Separation date'] < close_day
-        print(self.data[con1 & con2])
+        startDate = inputDate - pd.DateOffset(months=6)
+        finishDate = inputDate + pd.DateOffset(months=6)
+        # print(startDate)
+        # print(finishDate)
+        searchFrom = self.data['Separation date'] >= startDate
+        searchTo = self.data['Separation date'] < finishDate
+        print(self.data[searchFrom & searchTo])
 
 mainFunction = EmployeeData()
 mainFunction.nameSearch(rf.InputFunction('Enter the name to search: '))

@@ -18,7 +18,7 @@ def roundUp(num, dig):
     digNum = math.pow(10, dig)
     return math.ceil(num*digNum)/digNum
 
-def isYesOrNO(ans):
+def isYesOrNo(ans):
     if ans =='y' or ans == 'y':
         return True
     return False

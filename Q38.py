@@ -7,9 +7,8 @@ import random
 
 class FilteringValues:
     def __init__(self, inputNumberString):
-        self.inputNumberList = list(inputNumberString.split(' '))
-        self.inputNumberList = list(map(int, self.inputNumberList))
-
+        # self.inputNumberList = list(inputNumberString.split(' '))
+        self.inputNumberList = list(map(int, inputNumberString.split()))
 
     @classmethod
     def fromInput(cls):
@@ -18,13 +17,15 @@ class FilteringValues:
         )
 
     def filterEven(self):
-        for num in self.inputNumberList:
-            if num%2 == 1:
-                self.inputNumberList.remove(num)
+        # outputNumberList = []
+        # for num in self.inputNumberList:
+        #     if num%2 == 0:
+        #         outputNumberList.append(num)
+        # return outputNumberList
+        return [num for num in self.inputNumberList if num % 2 == 0]
 
     def result(self):
-        self.filterEven()
-        print(f'The even numbers are {self.inputNumberList} .')
+        print(f'The even numbers are {self.filterEven()} .')
 
 
 mainFunction = FilteringValues.fromInput()

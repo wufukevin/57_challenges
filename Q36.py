@@ -1,3 +1,4 @@
+from statistics import mean
 import RegulationFunction as rf
 import numpy as np
 import math
@@ -24,12 +25,13 @@ class ComputingStatistic:
             self.inputList.append(inputedNumber)
 
     def computeAverage(self):
-        return sum(self.inputList)/len(self.inputList)
+        # return sum(self.inputList)/len(self.inputList)
+        return mean(self.inputList)
 
     def computeStandardDeviation(self):
         average = self.computeAverage()
         calculatedlist = [math.pow(num-average,2) for num in self.inputList]
-        meanOfTheList = sum(calculatedlist)/len(self.inputList)
+        meanOfTheList = mean(calculatedlist)
         return(math.sqrt(meanOfTheList))
 
     def printAnswer(self):

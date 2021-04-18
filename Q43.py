@@ -3,11 +3,11 @@ import os
 
 
 class WebsiteGenerator:
-    def __init__(self, siteName, author, wantJavaFolder, wantCssFolder):
+    def __init__(self, siteName, author, wantJsFolder, wantCssFolder):
         self.siteName = siteName
         self.author = author
-        self.wantJavaFolder = True if wantJavaFolder == 'y' else False
-        self.wantCssFolder = True if wantCssFolder == 'y' else False
+        self.wantJsFolder = wantJsFolder == 'y'
+        self.wantCssFolder = wantCssFolder == 'y'
 
         self.cur_path = os.path.abspath(os.path.dirname(__file__))
 
@@ -17,14 +17,15 @@ class WebsiteGenerator:
         return cls(
             rf.InputFunction('Site name: '),
             rf.InputFunction('Author: '),
-            rf.InputFunction('Do you want a folder for JavaScript? ',1,rf.isYesOrNO),
-            rf.InputFunction('Do you want a folder for CSS? ',1,rf.isYesOrNO)
+            rf.InputFunction('Do you want a folder for JavaScript? ', 1, rf.isYesOrNo),
+            rf.InputFunction('Do you want a folder for CSS? ', 1, rf.isYesOrNo)
         )
 
     def generateWeb(self):
-        data_path = os.path.abspath(self.cur_path + '/awesomeco')
-        if not os.path.exists(data_path): os.mkdir(data_path)
-        print('Created ./awesomeco')
+        sitePath = os.path.abspath(self.cur_path + f'/{self.siteName}')
+        self.createFolder(sitePath)
+        # if not os.path.exists(sitePath): os.mkdir(sitePath)
+        # print(f'Created ./{self.siteName}')
 
         text = f'''
         <html>
@@ -37,21 +38,22 @@ class WebsiteGenerator:
             </body>
         </html>
         '''
-        file = open("index.html", "w")
+        file = open(f"{sitePath}/index.html", "w")
         file.write(text)
         file.close()
-        print('Created ./awesomeco/index.html')
+        print(f'Created {sitePath}/index.html')
 
-        if self.wantJavaFolder:
-            data_path = os.path.abspath(self.cur_path + '/js')
-            if not os.path.exists(data_path): os.mkdir(data_path)
-            print('Created ./awesomeco/js/')
+
+        if self.wantJsFolder:
+            jsPath = os.path.abspath(f'{sitePath}/js')
+            self.createFolder(jsPath)
         if self.wantCssFolder:
-            data_path = os.path.abspath(self.cur_path + '/css')
-            if not os.path.exists(data_path): os.mkdir(data_path)
-            print('Created ./awesomeco/css/')
+            cssPath = os.path.abspath(f'{sitePath}/css')
+            self.createFolder(cssPath)
 
-
+    def createFolder(self, folderPath):
+        if not os.path.exists(folderPath): os.mkdir(folderPath)
+        print(f'Created {folderPath}')
 
 
 mainFunction = WebsiteGenerator.fromInput()

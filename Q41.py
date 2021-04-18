@@ -6,45 +6,45 @@ outputFilePath = 'Q41_sortedNameList.txt'
 
 class NameSorter:
     def __init__(self):
-        self.inputFilePath = inputFilePath
         self.outputFilePath = outputFilePath
-        self.file = open(self.inputFilePath, 'r')
-        self.nameList = []
-        for name in self.file:
-            self.nameList.append(name[:-1])
-        self.file.close()
+        with open(inputFilePath,'r') as f:
+            self.nameList = [name[:-1] for name in f]
+        # self.file = open(self.inputFilePath, 'r')
+        #
+        # for name in self.file:
+        #     self.nameList.append(name[:-1])
+        # self.file.close()
 
 
-    def quickSort(self, list, sortedLevel):
+    def quickSort(self, list, sortCharIndex):
         if len(list) == 1 or len(list) == 0:
             return list
-        pivot = list[0][sortedLevel]
-        mid_list = []
-        left_list = []
-        right_list = []
+        pivot = list[0][sortCharIndex]
+        midList = []
+        leftList = []
+        rightList = []
 
         for name in list:
-            if name[sortedLevel] < pivot:
-                left_list.append(name)
-            elif name[sortedLevel] > pivot:
-                right_list.append(name)
+            if name[sortCharIndex] < pivot:
+                leftList.append(name)
+            elif name[sortCharIndex] > pivot:
+                rightList.append(name)
             else:
-                mid_list.append(name)
-        if len(mid_list) > 2:
-            mid_list = self.quickSort(mid_list, sortedLevel+1)
-        return self.quickSort(left_list, sortedLevel)+mid_list+self.quickSort(right_list, sortedLevel)
+                midList.append(name)
+        if len(midList) > 1:
+            midList = self.quickSort(midList, sortCharIndex + 1)
+        return self.quickSort(leftList, sortCharIndex) + midList + self.quickSort(rightList, sortCharIndex)
 
 
     def writeSortedNames(self):
-        file = open(self.outputFilePath, 'w')
-        file.write(f'Total of {len(self.nameList)} names')
-        file.write('\n')
-        file.write('-----------------')
-        file.write('\n')
-        for name in self.quickSort(self.nameList,0):
-            file.write(name)
-            file.write('\n')
-        self.file.close()
+        with open(self.outputFilePath, 'w+') as f:
+            f.write(f'Total of {len(self.nameList)} names')
+            f.write('\n')
+            f.write('-----------------')
+            f.write('\n')
+            for name in self.quickSort(self.nameList,0):
+                f.write(name)
+                f.write('\n')
 
     def outputSortedNames(self):
         print(f'Total of {len(self.nameList)} names')
