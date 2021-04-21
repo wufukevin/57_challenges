@@ -8,10 +8,19 @@ class MyTestCase(unittest.TestCase):
     @patch('builtins.print')
     @patch('builtins.input')
     def test_bac_in_imperial(self, mock_input, mock_print):
-        mock_input.side_effect = ['5', '80', 'M', '60']
+        mock_input.side_effect = ['2', '5', '80', 'M', '60']
         checker = BACChecker()
         checker.check(*ask_question())
         mock_print.assert_has_calls([call('Your BAC is 0.08'),
+                                     call('It is not legal for you to drive.')])
+
+    @patch('builtins.print')
+    @patch('builtins.input')
+    def test_bac_in_metrics(self, mock_input, mock_print):
+        mock_input.side_effect = ['1', '5', '80', 'M', '60']
+        checker = BACChecker()
+        checker.check(*ask_question())
+        mock_print.assert_has_calls([call('Your BAC is 3.60'),
                                      call('It is not legal for you to drive.')])
 
 
