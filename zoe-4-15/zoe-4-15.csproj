@@ -6,4 +6,8 @@
     <RootNamespace>zoe_4_15</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="BCrypt.Net-Next" Version="4.0.2" />
+  </ItemGroup>
+
 </Project>
