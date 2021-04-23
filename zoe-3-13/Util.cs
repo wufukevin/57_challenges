@@ -55,10 +55,14 @@ namespace zoe_3_13
       Console.ResetColor();
     }
 
+    public static double RoundDownPlaces(double value, int places)
+    {
+      return Math.Round(value, places, MidpointRounding.ToNegativeInfinity);
+    }
+
     public static double RoundUpPlaces(double value, int places)
     {
-      var baseNumber = Math.Pow(10, places);
-      return Math.Floor(value * baseNumber) / baseNumber;
+      return Math.Round(value, places, MidpointRounding.ToPositiveInfinity);
     }
 
     public static string CheckPluralNoun(string noun, int amount)
