@@ -23,7 +23,7 @@ def ask_question():
         return Temperature(t.upper())
 
     for mode in Temperature:
-        print(f"Press {mode.value} to convert from {mode.name} to {mode.convert_to()}")
+        print(f"Press {mode.value} to convert from {mode.name} to {mode.convert_to().name}")
 
     input_mode = temperature_convertor(input('Your choice: '))
     input_temperature = float_convertor(input(f'Please enter the temperature in {input_mode.name}: '))
