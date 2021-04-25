@@ -9,7 +9,6 @@ class WhoInSpace:
     def __init__(self):
         r= requests.get(API)
         self.inputData = r.json()['people']
-        # print(self.inputFile)
 
 
     def show(self):

@@ -12,7 +12,6 @@ class WordFrequencyFinder:
         self.inputWord = inputFile.split()
         self.wordList = {}
         self.wordFinder()
-        # print(self.inputFile)
 
     def wordFinder(self):
         for word in self.inputWord:
