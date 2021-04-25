@@ -18,5 +18,3 @@ Constraints
 • Revise the program to ensure that inputs are entered as numeric values. 
 Don’t allow the user to proceed if the value entered is not numeric.
 • Break the program into functions that perform the computations.
-• Implement this program as a GUI program that automatically updates the values when any value changes.
-• Modify the program so it also supports the Kelvin scale.
