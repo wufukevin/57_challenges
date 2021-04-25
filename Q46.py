@@ -10,22 +10,22 @@ class WordFrequencyFinder:
         with open(filePath) as f:
             inputFile = f.read()
         self.inputWord = inputFile.split()
-        self.wordList = {}
+        self.wordMap = {}
         self.wordFinder()
 
     def wordFinder(self):
         for word in self.inputWord:
-            if word in self.wordList.keys():
-                self.wordList[word] += 1
+            if word in self.wordMap.keys():
+                self.wordMap[word] += 1
             else:
-                self.wordList[word] = 1
+                self.wordMap[word] = 1
 
     def show(self):
-        wordMaxLength = max(len(word) for word in self.wordList.keys())+2
-        format_template = '%%-%ds'
-        formatter = format_template % (wordMaxLength)
+        wordMaxLength = max(len(word) for word in self.wordMap.keys()) + 2
+        formatTemplate = '%%-%ds'
+        formatter = formatTemplate % (wordMaxLength)
 
-        for element in sorted(self.wordList.items(), key=lambda x:x[1], reverse=True):
+        for element in sorted(self.wordMap.items(), key=lambda x:x[1], reverse=True):
             print(formatter % (element[0]+':') + '*'*element[1])
 
 mainFunction = WordFrequencyFinder()
