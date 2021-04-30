@@ -13,8 +13,8 @@ def given_answers(mock_input, answers):
     mock_input.side_effect = answers
 
 
-def when_build_question(mock_validator, questioner, question, retry):
-    questioner.add_question(question, validator=mock_validator, retry=retry)
+def when_build_question(mock_convertor, questioner, question, retry):
+    questioner.add_question(question, convertor=mock_convertor, retry=retry)
 
 
 def when_ask_question(questioner):
@@ -29,7 +29,7 @@ def given_validator_exception(validator):
 class TestQuestioner(unittest.TestCase):
     def setUp(self):
         self.retry = True
-        self.mock_validator = MagicMock()
+        self.mock_convertor = MagicMock()
         self.questioner = Questioner()
         self.wrong_answers = 'wrong answers'
         self.question = 'question'
@@ -38,28 +38,28 @@ class TestQuestioner(unittest.TestCase):
 
     @patch('builtins.input')
     def test_questioner_get_answer_with_validator_without_retry(self, mock_input):
-        validator = given_validator(self.mock_validator, [self.valid_input])
+        convertor = given_validator(self.mock_convertor, [self.valid_input])
         given_answers(mock_input, [self.valid_input])
-        when_build_question(validator, self.questioner, self.question, self.not_retry)
-        self.questions_should_be(self.questioner, [(self.question, validator, self.not_retry)])
+        when_build_question(convertor, self.questioner, self.question, self.not_retry)
+        self.questions_should_be(self.questioner, [(self.question, convertor, self.not_retry)])
         answers = when_ask_question(self.questioner)
         self.answers_should_be(answers, (self.valid_input,))
-        validator.reset_mock()
-        given_validator_exception(validator)
+        convertor.reset_mock()
+        given_validator_exception(convertor)
         mock_input.reset_mock()
         given_answers(mock_input, self.wrong_answers)
         self.should_raise_exception_when_ask(self.questioner)
 
     @patch('builtins.input')
     def test_questioner_get_answer_with_validator_with_retry(self, mock_input):
-        validator = given_validator(self.mock_validator, [Exception, self.valid_input])
+        convertor = given_validator(self.mock_convertor, [Exception, self.valid_input])
         given_answers(mock_input, [self.wrong_answers, self.valid_input])
-        when_build_question(validator, self.questioner, self.question, self.retry)
-        self.questions_should_be(self.questioner, [(self.question, validator, self.retry)])
+        when_build_question(convertor, self.questioner, self.question, self.retry)
+        self.questions_should_be(self.questioner, [(self.question, convertor, self.retry)])
         answers = when_ask_question(self.questioner)
         self.answers_should_be(answers, (self.valid_input,))
         self.assertEqual(2, mock_input.call_count)
-        self.assertEqual(2, self.mock_validator.call_count)
+        self.assertEqual(2, self.mock_convertor.call_count)
 
     def should_raise_exception_when_ask(self, questioner):
         with self.assertRaises(Exception):
