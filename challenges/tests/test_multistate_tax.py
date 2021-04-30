@@ -1,31 +1,7 @@
 import unittest
 from unittest.mock import patch, call
 
-from tax.multistate_tax import ask_more_questions_by_state
-from utils.convertors import to_float, to_state
-from utils.questioner import Questioner
-
-
-class TaxCalculator:
-    def calculate(self, amount, state, county):
-        tax_mapping = {
-            'Wisconsin,eau claire': 0.05,
-            'Wisconsin,dunn': 0.04,
-            'Illinos,': 0.08
-        }
-        sub_total = 0
-        tax = tax_mapping.get(','.join([state, '' if county is None else county]), 0)
-        if tax > 0:
-            sub_total = tax * amount
-            print(f'The tax is ${sub_total :.2f}.')
-        total_amount = amount + sub_total
-        print(f'The total is ${total_amount:.2f}.')
-
-
-def prepare_questions():
-    questioner = Questioner().add_question('What is the order amount?', to_float) \
-        .add_question('What state do you live in?', to_state)
-    return questioner
+from tax.multistate_tax import ask_more_questions_by_state, TaxCalculator, prepare_questions
 
 
 def given_answers(mock_input, answers):
