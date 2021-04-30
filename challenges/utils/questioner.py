@@ -2,7 +2,7 @@ class Questioner:
     def __init__(self):
         self.questions = []
 
-    def add_question(self, question, validator, retry=False):
+    def add_question(self, question, validator=None, retry=False):
         self.questions.append((question, validator, retry))
         return self
 
@@ -20,3 +20,6 @@ class Questioner:
                     if not retry:
                         raise e
         return tuple(answers)
+
+    def reset(self):
+        self.questions.clear()
