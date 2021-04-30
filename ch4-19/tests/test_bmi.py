@@ -1,5 +1,5 @@
 import unittest
-from unittest.mock import patch
+from unittest.mock import patch, call
 
 from ch4_19.bmi import Questioner, to_float, MeasureUnit, ImperialLength, ImperialWeight, \
     to_imperial_length, to_imperial_weight, to_enum, to_measure_unit
@@ -49,6 +49,15 @@ class MyTestCase(unittest.TestCase):
         answers = self.when_ask_question()
         self.should_have_input_counts(mock_input, 6)
         self.answers_should_be(answers, (MeasureUnit.Imperial, ImperialLength.Feet, 7.0, ImperialWeight.Ponds, 155.0))
+
+    @patch('builtins.print')
+    @patch('builtins.input')
+    def test_bmi(self, mock_input, mock_print):
+        given_answers(mock_input, ['I', 'F', '7', 'P', '155'])
+        answers = self.when_ask_question()
+        bmi_evaluator = BMIEvaluator()
+        bmi_evaluator.evaluate(*answers)
+        mock_print.assert_has_calls([call('Your BMI is 19.5.'), call('You are within the ideal weight range.')])
 
     def answers_should_be(self, answers, expected):
         self.assertTupleEqual(answers, expected)
