@@ -117,7 +117,7 @@ class MetricWeightUnit(Enum):
 
 class BMIEvaluator:
     def evaluate(self, *params):
-        measure_unit, length_unit, length, weight_unit, weight = params
+        length_unit, length, weight_unit, weight = params
         length_in_inches = length_unit.to_inches(length)
         weight_in_pounds = weight_unit.to_pounds(weight)
         bmi = (weight_in_pounds / pow(length_in_inches, 2)) * 703
@@ -149,3 +149,13 @@ def prepare_question(measure_unit):
             .add_question('Select the unit of the weight, K)Kilogram or G)Gram? ', validator=to_metric_weight_unit,
                           retry=True) \
             .add_question('Please input the weight: ', validator=to_float, retry=True)
+
+
+if __name__ == '__main__':
+    questioner = Questioner().add_question('Select a measure unit, I)Imperial or M)Metric? ',
+                                           validator=to_measure_unit, retry=True)
+    measure_unit, = questioner.ask()
+    questioner = prepare_question(measure_unit)
+    answers = questioner.ask()
+    bmi_evaluator = BMIEvaluator()
+    bmi_evaluator.evaluate(*answers)

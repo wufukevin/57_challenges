@@ -1,9 +1,8 @@
 import unittest
 from unittest.mock import patch, call
 
-from ch4_19.bmi import Questioner, to_float, MeasureUnit, to_enum, \
-    to_measure_unit, BMIEvaluator, to_metric_length_unit, \
-    to_metric_weight_unit, prepare_question
+from ch4_19.bmi import Questioner, MeasureUnit, to_enum, \
+    to_measure_unit, BMIEvaluator, prepare_question
 
 
 def when_convert_to_enum(input_content, enum):
@@ -46,8 +45,7 @@ class MyTestCase(unittest.TestCase):
 
     @patch('builtins.input')
     def test_questioner(self, mock_input):
-        self.measure_unit_questioner.add_question('Select a measure unit, I)Imperial or M)Metric? ',
-                                                  validator=to_measure_unit, retry=True)
+        self.prepare_measure_unit_question()
         given_answers(mock_input, ['I'])
         answers = self.when_ask_question()
         self.should_have_input_counts(mock_input, 1)
@@ -58,11 +56,16 @@ class MyTestCase(unittest.TestCase):
         self.should_have_input_counts(mock_input, 2)
         self.answers_should_be(answers, (MeasureUnit.Imperial,))
 
+    def prepare_measure_unit_question(self):
+        self.measure_unit_questioner.add_question('Select a measure unit, I)Imperial or M)Metric? ',
+                                                  validator=to_measure_unit, retry=True)
+
     @patch('builtins.print')
     @patch('builtins.input')
     def test_bmi_in_imperial(self, mock_input, mock_print):
+        self.prepare_measure_unit_question()
         given_answers(mock_input, ['i'])
-        measure_unit = self.when_ask_question()
+        measure_unit, = self.when_ask_question()
         questioner = prepare_question(measure_unit)
         given_answers(mock_input, ['F', '7', 'P', '155'])
         answers = questioner.ask()
@@ -96,8 +99,9 @@ class MyTestCase(unittest.TestCase):
     @patch('builtins.print')
     @patch('builtins.input')
     def test_bmi_in_metric(self, mock_input, mock_print):
+        self.prepare_measure_unit_question()
         given_answers(mock_input, ['m'])
-        measure_unit = self.when_ask_question()
+        measure_unit, = self.when_ask_question()
         questioner = prepare_question(measure_unit)
         given_answers(mock_input, ['m', '1.7', 'k', '70'])
         answers = questioner.ask()
