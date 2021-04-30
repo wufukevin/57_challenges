@@ -1,11 +1,23 @@
 from enum import Enum
 
+GRAMS_PER_KILOGRAM = 1000
+
+KILOGRAMS_PER_POUNDS = 0.45359
+
+INCHES_PER_FEET = 12
+
+CMS_PER_METER = 100
+
+POUNDS_PER_STONE = 14
+
+CMS_PER_INCHES = 2.54
+
 
 class Questioner:
     def __init__(self):
         self.questions = []
 
-    def add_question(self, question, validator, retry):
+    def add_question(self, question, validator, retry=False):
         self.questions.append((question, validator, retry))
         return self
 
@@ -42,12 +54,20 @@ def to_float(input_content):
     return float(input_content)
 
 
-def to_imperial_length(input_content):
-    return to_enum(input_content, ImperialLength)
+def to_imperial_length_unit(input_content):
+    return to_enum(input_content, ImperialLengthUnit)
 
 
-def to_imperial_weight(input_content):
-    return to_enum(input_content, ImperialWeight)
+def to_imperial_weight_unit(input_content):
+    return to_enum(input_content, ImperialWeightUnit)
+
+
+def to_metric_length_unit(input_content):
+    return to_enum(input_content, MetricLengthUnit)
+
+
+def to_metric_weight_unit(input_content):
+    return to_enum(input_content, MetricWeightUnit)
 
 
 class MeasureUnit(Enum):
@@ -55,11 +75,77 @@ class MeasureUnit(Enum):
     Metric = 'Metric'
 
 
-class ImperialLength(Enum):
+class ImperialLengthUnit(Enum):
     Feet = 'Feet'
     Inches = 'Inches'
 
+    def to_inches(self, length):
+        if self == ImperialLengthUnit.Feet:
+            return length * INCHES_PER_FEET
+        return length
 
-class ImperialWeight(Enum):
-    Ponds = 'Ponds'
+
+class ImperialWeightUnit(Enum):
+    Pounds = 'Pounds'
     Stones = 'Stones'
+
+    def to_pounds(self, weight):
+        if self == ImperialWeightUnit.Stones:
+            return weight * POUNDS_PER_STONE
+        return weight
+
+
+class MetricLengthUnit(Enum):
+    Meter = 'Meter'
+    Centimeter = 'Centimeter'
+
+    def to_inches(self, length):
+        if self == MetricLengthUnit.Meter:
+            return length * CMS_PER_METER / CMS_PER_INCHES
+        return length / CMS_PER_INCHES
+
+
+class MetricWeightUnit(Enum):
+    Kilogram = 'Kilogram'
+    Gram = 'Gram'
+
+    def to_pounds(self, weight):
+        if self == MetricWeightUnit.Kilogram:
+            return weight / KILOGRAMS_PER_POUNDS
+        return weight / GRAMS_PER_KILOGRAM / KILOGRAMS_PER_POUNDS
+
+
+class BMIEvaluator:
+    def evaluate(self, *params):
+        measure_unit, length_unit, length, weight_unit, weight = params
+        length_in_inches = length_unit.to_inches(length)
+        weight_in_pounds = weight_unit.to_pounds(weight)
+        bmi = (weight_in_pounds / pow(length_in_inches, 2)) * 703
+        print(f'Your BMI is {bmi:.1f}.')
+        if bmi < 18.5:
+            print('You are underweight the ideal weight. Go to see the doctor.')
+        elif bmi > 25:
+            print('You are overweight the ideal weight. Go to see the doctor.')
+        else:
+            print('You are within the ideal weight range.')
+
+
+def prepare_question(measure_unit):
+    if measure_unit == MeasureUnit.Imperial:
+        return Questioner() \
+            .add_question('Select the unit of the height, F)Feet or I)Inches? ',
+                          validator=to_imperial_length_unit,
+                          retry=True) \
+            .add_question('Please input the height: ', validator=to_float, retry=True) \
+            .add_question('Select the unit of the weight, P)Pounds or S)Stones? ', validator=to_imperial_weight_unit,
+                          retry=True) \
+            .add_question('Please input the weight: ', validator=to_float, retry=True)
+    else:
+        return Questioner() \
+            .add_question('Select the unit of the height, M)Meter or C)Centimeter? ',
+                          validator=to_metric_length_unit,
+                          retry=True) \
+            .add_question('Please input the height: ', validator=to_float, retry=True) \
+            .add_question('Select the unit of the weight, K)Kilogram or G)Gram? ', validator=to_metric_weight_unit,
+                          retry=True) \
+            .add_question('Please input the weight: ', validator=to_float, retry=True)
