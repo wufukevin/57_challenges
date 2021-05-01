@@ -2,18 +2,20 @@ class Questioner:
     def __init__(self):
         self.questions = []
 
-    def add_question(self, question, validator, retry=False):
-        self.questions.append((question, validator, retry))
+    def add_question(self, question, convertor=None, retry=False):
+        self.questions.append((question, convertor, retry))
         return self
 
     def ask(self):
         answers = []
-        for question, validator, retry in self.questions:
+        if len(self.questions) == 0:
+            return None,
+        for question, convertor, retry in self.questions:
             while True:
                 try:
                     answer = input(question)
-                    if validator is not None:
-                        answer = validator(answer)
+                    if convertor is not None:
+                        answer = convertor(answer)
                     answers.append(answer)
                     break
                 except Exception as e:
