@@ -1,3 +1,6 @@
+from utils.enums import Language
+
+
 def to_enum(input_content, enum):
     input_in_lower_case = input_content.lower()
     for unit in enum:
@@ -11,6 +14,10 @@ def to_float(input_content):
     return float(input_content)
 
 
+def to_int(input_content):
+    return int(input_content)
+
+
 def to_lower(input_content):
     return input_content.lower()
 
@@ -22,3 +29,7 @@ def to_state(input_content):
     elif input_in_lower == 'illinois' or input_in_lower == 'il':
         return 'Illinos'
     return input_content
+
+
+def to_language(input_content):
+    return Language(input_content)
