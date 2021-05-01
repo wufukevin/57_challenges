@@ -57,8 +57,8 @@ class MyTestCase(unittest.TestCase):
         self.answers_should_be(answers, (MeasureUnit.Imperial,))
 
     def prepare_measure_unit_question(self):
-        self.measure_unit_questioner.add_question('Select a measure unit, I)Imperial or M)Metric? ',
-                                                  validator=to_measure_unit, retry=True)
+        self.measure_unit_questioner.build_question('Select a measure unit, I)Imperial or M)Metric? ',
+                                                    convertor=to_measure_unit, retry=True)
 
     @patch('builtins.print')
     @patch('builtins.input')

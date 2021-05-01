@@ -17,23 +17,23 @@ class Questioner:
     def __init__(self):
         self.questions = []
 
-    def add_question(self, question, validator, retry=False):
-        self.questions.append((question, validator, retry))
+    def build_question(self, question, convertor, retry=False):
+        self.questions.append((question, convertor, retry))
         return self
 
     def ask(self):
         answers = []
-        for question, validator, retry in self.questions:
+        for question, convertor, retry in self.questions:
             while True:
                 try:
                     answer = input(question)
-                    if validator is not None:
-                        answer = validator(answer)
+                    if convertor is not None:
+                        answer = convertor(answer)
                     answers.append(answer)
                     break
-                except:
+                except Exception as e:
                     if not retry:
-                        break
+                        raise e
         return tuple(answers)
 
 
@@ -132,28 +132,29 @@ class BMIEvaluator:
 
 def prepare_question(measure_unit):
     if measure_unit == MeasureUnit.Imperial:
+        # Builder pattern
         return Questioner() \
-            .add_question('Select the unit of the height, F)Feet or I)Inches? ',
-                          validator=to_imperial_length_unit,
-                          retry=True) \
-            .add_question('Please input the height: ', validator=to_float, retry=True) \
-            .add_question('Select the unit of the weight, P)Pounds or S)Stones? ', validator=to_imperial_weight_unit,
-                          retry=True) \
-            .add_question('Please input the weight: ', validator=to_float, retry=True)
+            .build_question('Select the unit of the height, F)Feet or I)Inches? ',
+                            convertor=to_imperial_length_unit,
+                            retry=True) \
+            .build_question('Please input the height: ', convertor=to_float, retry=True) \
+            .build_question('Select the unit of the weight, P)Pounds or S)Stones? ', convertor=to_imperial_weight_unit,
+                            retry=True) \
+            .build_question('Please input the weight: ', convertor=to_float, retry=True)
     else:
         return Questioner() \
-            .add_question('Select the unit of the height, M)Meter or C)Centimeter? ',
-                          validator=to_metric_length_unit,
-                          retry=True) \
-            .add_question('Please input the height: ', validator=to_float, retry=True) \
-            .add_question('Select the unit of the weight, K)Kilogram or G)Gram? ', validator=to_metric_weight_unit,
-                          retry=True) \
-            .add_question('Please input the weight: ', validator=to_float, retry=True)
+            .build_question('Select the unit of the height, M)Meter or C)Centimeter? ',
+                            convertor=to_metric_length_unit,
+                            retry=True) \
+            .build_question('Please input the height: ', convertor=to_float, retry=True) \
+            .build_question('Select the unit of the weight, K)Kilogram or G)Gram? ', convertor=to_metric_weight_unit,
+                            retry=True) \
+            .build_question('Please input the weight: ', convertor=to_float, retry=True)
 
 
 if __name__ == '__main__':
-    questioner = Questioner().add_question('Select a measure unit, I)Imperial or M)Metric? ',
-                                           validator=to_measure_unit, retry=True)
+    questioner = Questioner().build_question('Select a measure unit, I)Imperial or M)Metric? ',
+                                             convertor=to_measure_unit, retry=True)
     measure_unit, = questioner.ask()
     questioner = prepare_question(measure_unit)
     answers = questioner.ask()
