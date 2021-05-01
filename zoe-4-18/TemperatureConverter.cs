@@ -1,16 +1,27 @@
 using System;
+using System.Collections.Generic;
 
 namespace zoe_4_18
 {
+ 
   class TemperatureConverter
   {
+  
     public double Run(string fromUnit, string toUnit, double fromAmount)
     {
-      var formulaName = fromUnit + "To" + toUnit;
+      var convertFunctions = new Dictionary<string, Func<double,double>>()
+      {
+        {"CToF", CToF},
+        {"FToC", FToC},
+        {"CToK", CToK},
+        {"FToK", FToK},
+      };
 
-      string result = GetType().GetMethod(formulaName).Invoke(this, new object[] { fromAmount }).ToString();
+      var formulaName = $"{fromUnit}To{toUnit}";
 
-      return Convert.ToDouble(result);
+      double result = convertFunctions[formulaName](fromAmount);
+
+      return result;
     }
 
     public double CToF(double C)
