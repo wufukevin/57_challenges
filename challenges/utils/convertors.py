@@ -11,6 +11,10 @@ def to_float(input_content):
     return float(input_content)
 
 
+def to_int(input_content):
+    return int(input_content)
+
+
 def to_lower(input_content):
     return input_content.lower()
 
