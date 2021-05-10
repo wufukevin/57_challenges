@@ -17,7 +17,7 @@ class InputDistinctInt:
             self.number_set.add(input_number)
             return input_number
         except Exception:
-            return input_content
+            raise StopIteration
 
 
 def generate_question(question_count):
@@ -31,12 +31,9 @@ class FindMax:
     def find(self, infinite_questioner):
         max_of_the_input = None
         for answer in infinite_questioner.ask(AskMode.OneByOne):
-            try:
-                input_number = int(answer)
-                if max_of_the_input is None or max_of_the_input < input_number:
-                    max_of_the_input = answer
-            except Exception:
-                break
+            input_number = int(answer)
+            if max_of_the_input is None or max_of_the_input < input_number:
+                max_of_the_input = answer
         return max_of_the_input
 
 

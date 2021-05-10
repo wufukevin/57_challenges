@@ -1,5 +1,4 @@
-from enum import Enum, auto
-from types import GeneratorType
+from enum import Enum
 
 
 class AskMode(Enum):
@@ -7,16 +6,31 @@ class AskMode(Enum):
     OneByOne = 1
 
 
-def convert_answer_or_retry(question, convertor, retry):
+def _convert_answer_or_retry(question, convertor, retry):
     while True:
+        answer = input(question)
         try:
-            answer = input(question)
             if convertor is not None:
                 return convertor(answer)
             return answer
+        except StopIteration:
+            raise
         except Exception as e:
             if not retry:
                 raise e
+
+
+class _QuestionGeneratorIterator:
+    def __init__(self, questions):
+        self.questions = questions
+        self._iter = iter(self.questions)
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        question, convertor, retry = next(self._iter)
+        return _convert_answer_or_retry(question, convertor, retry)
 
 
 class Questioner:
@@ -29,9 +43,8 @@ class Questioner:
 
     def ask(self, mode=AskMode.All):
         return tuple(
-            convert_answer_or_retry(question, convertor, retry) for question, convertor, retry in
-            self.questions) if mode == AskMode.All else (
-            convert_answer_or_retry(question, convertor, retry) for question, convertor, retry in self.questions)
+            _convert_answer_or_retry(question, convertor, retry) for question, convertor, retry in
+            self.questions) if mode == AskMode.All else _QuestionGeneratorIterator(self.questions)
 
 
 def _default_question_generator():
