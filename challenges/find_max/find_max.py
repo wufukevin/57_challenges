@@ -33,7 +33,7 @@ class FindMax:
         for answer in infinite_questioner.ask(AskMode.OneByOne):
             input_number = int(answer)
             if max_of_the_input is None or max_of_the_input < input_number:
-                max_of_the_input = answer
+                max_of_the_input = input_number
         return max_of_the_input
 
 
