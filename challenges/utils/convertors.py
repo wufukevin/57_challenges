@@ -1,3 +1,6 @@
+from enum import Enum
+
+
 def to_enum(input_content, enum):
     input_in_lower_case = input_content.lower()
     for unit in enum:
@@ -5,6 +8,15 @@ def to_enum(input_content, enum):
         if input_in_lower_case == value_in_lower_case or value_in_lower_case.startswith(input_in_lower_case, 0, 1):
             return unit
     raise Exception
+
+
+class YesNoEnum(Enum):
+    Yes = 'y'
+    No = 'n'
+
+
+def to_yes_no_enum(input_content):
+    return to_enum(input_content, YesNoEnum)
 
 
 def to_float(input_content):
