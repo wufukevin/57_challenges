@@ -1,7 +1,7 @@
 import unittest
 from unittest.mock import patch, MagicMock
 
-from utils.questioner import Questioner, InfiniteQuestioner, NotSupportedError, AskMode
+from utils.questioner import Questioner, NotSupportedError, AskMode, QuestionIterator, SimpleQuestionIterator
 
 
 def given_convertor(convertor, result):
@@ -26,20 +26,30 @@ def given_convertor_exception(convertor):
     convertor.side_effect = Exception
 
 
-def test_question_generator(question_count):
-    count = 0
-    while count < question_count:
-        yield '', None, False
-        count += 1
+class test_question_generator(QuestionIterator):
+    def __init__(self, question_count):
+        super().__init__()
+        self.question_count = question_count
+
+    def __next__(self):
+        if self._current_question_index >= self.question_count:
+            raise StopIteration
+        self._current_question_index += 1
+        return '', None, False
 
 
-def empty_question_generator():
-    yield from ()
+class EmptyQuestionIterator(QuestionIterator):
+    pass
+
+
+class TestQuestionIterator(SimpleQuestionIterator):
+    def add_question(self, question, convertor, retry):
+        return super().add_question(question, convertor, retry)
 
 
 class TestQuestioner(unittest.TestCase):
     def setUp(self):
-        self.infinite_questioner = InfiniteQuestioner()
+        self.infinite_questioner = Questioner()
         self.retry = True
         self.mock_convertor = MagicMock()
         self.questioner = Questioner()
@@ -57,7 +67,6 @@ class TestQuestioner(unittest.TestCase):
         convertor = given_convertor(self.mock_convertor, [self.valid_input])
         given_answers(mock_input, [self.valid_input])
         when_build_question(convertor, self.questioner, self.question, self.not_retry)
-        self.questions_should_be(self.questioner, [(self.question, convertor, self.not_retry)])
         answers = when_ask_question(self.questioner)
         self.answers_should_be(answers, (self.valid_input,))
         convertor.reset_mock()
@@ -71,7 +80,6 @@ class TestQuestioner(unittest.TestCase):
         convertor = given_convertor(self.mock_convertor, [Exception, self.valid_input])
         given_answers(mock_input, [self.wrong_answers, self.valid_input])
         when_build_question(convertor, self.questioner, self.question, self.retry)
-        self.questions_should_be(self.questioner, [(self.question, convertor, self.retry)])
         answers = when_ask_question(self.questioner)
         self.answers_should_be(answers, (self.valid_input,))
         self.assertEqual(2, mock_input.call_count)
@@ -79,8 +87,7 @@ class TestQuestioner(unittest.TestCase):
 
     @patch('builtins.input')
     def test_infinite_questioner_with_non_empty_generator(self, mock_input):
-        self.should_raise_not_supported_exception_when_ask()
-        self.when_set_question_generator(test_question_generator(3))
+        self.when_set_question_iterator(test_question_generator(3))
         given_answers(mock_input, ['1', 'a', ''])
         answers = self.when_infinite_questioner_ask()
         self.answers_should_be(answers, ('1', 'a', ''))
@@ -88,21 +95,27 @@ class TestQuestioner(unittest.TestCase):
     @patch('builtins.input')
     def test_infinite_questioner_1_by_1(self, mock_input):
         given_answers(mock_input, ['1', 'a', ''])
-        self.when_set_question_generator(test_question_generator(3))
+        self.when_set_question_iterator(test_question_generator(3))
         answers = self.when_infinite_questioner_ask_1_by_1()
         self.answers_should_be(answers, ('1', 'a', ''))
 
     def test_infinite_questioner_with_empty_generator(self):
-        self.when_set_question_generator(empty_question_generator())
+        self.when_set_question_iterator(EmptyQuestionIterator())
         answers = self.when_infinite_questioner_ask()
         self.answers_should_be(answers, tuple())
+
+    def test_question_iterator(self):
+        question_iterator = SimpleQuestionIterator()
+        question_iterator = question_iterator.add_question('question', None, False)
+        question_added = [(question, convertor, retry) for question, convertor, retry in question_iterator]
+        self.assertListEqual(question_added, question_iterator.questions)
 
     def when_infinite_questioner_ask(self):
         answers = self.infinite_questioner.ask()
         return answers
 
-    def when_set_question_generator(self, generator):
-        self.infinite_questioner.set_question_generator(generator)
+    def when_set_question_iterator(self, iterator):
+        self.infinite_questioner.add_question_iterator(iterator)
 
     def should_raise_not_supported_exception_when_ask(self):
         with self.assertRaises(NotSupportedError) as exception:
@@ -119,9 +132,6 @@ class TestQuestioner(unittest.TestCase):
 
     def answers_should_be(self, answers, expected_answers):
         self.assertTupleEqual(answers, expected_answers)
-
-    def questions_should_be(self, questioner, questions):
-        self.assertListEqual(questions, questioner.questions)
 
 
 if __name__ == '__main__':

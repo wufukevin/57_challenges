@@ -22,16 +22,41 @@ def _convert_answer_or_retry(question, convertor, retry):
 
 class Questioner:
     def __init__(self):
-        self.questions = []
+        self.question_iterators = []
 
     def add_question(self, question, convertor=None, retry=False):
-        self.questions.append((question, convertor, retry))
+        question_iterator = SimpleQuestionIterator().add_question(question, convertor, retry)
+        self.question_iterators.append(question_iterator)
         return self
 
     def ask(self, mode=AskMode.All):
-        return tuple(
-            _convert_answer_or_retry(question, convertor, retry) for question, convertor, retry in
-            self.questions) if mode == AskMode.All else self
+        if mode == AskMode.All:
+            answers = []
+            for question_iterator in self.question_iterators:
+                for question, convertor, retry in question_iterator:
+                    answers.append(_convert_answer_or_retry(question, convertor, retry))
+            return tuple(answers)
+        return self
+
+    def __iter__(self):
+        self._current_iterator_index = 0
+        return self
+
+    def __next__(self):
+        if len(self.question_iterators) == 0:
+            raise StopIteration
+        try:
+            question, convertor, retry = next(self.question_iterators[self._current_iterator_index])
+            return _convert_answer_or_retry(question, convertor, retry)
+        except StopIteration:
+            self._current_iterator_index += 1
+        finally:
+            if self._current_iterator_index >= len(self.question_iterators):
+                raise StopIteration
+
+    def add_question_iterator(self, iterator):
+        self.question_iterators.append(iterator)
+        return self
 
 
 class NotSupportedError(Exception):
@@ -42,23 +67,30 @@ class NotSupportedError(Exception):
         return f'{self.name} is not supported'
 
 
-class InfiniteQuestioner(Questioner):
+class QuestionIterator:
     def __init__(self):
-        super().__init__()
-        self.questions = None
-        self._iter = None
+        self._current_question_index = 0
 
     def __iter__(self):
+        self._current_question_index = 0
         return self
 
     def __next__(self):
-        question, convertor, retry = next(self._iter)
-        return _convert_answer_or_retry(question, convertor, retry)
+        raise StopIteration
 
-    def add_question(self, question, convertor=None, retry=False):
-        raise NotSupportedError(self.add_question.__name__)
 
-    def set_question_generator(self, question_generator):
-        self.questions = question_generator
-        self._iter = iter(self.questions)
+class SimpleQuestionIterator(QuestionIterator):
+    def __init__(self):
+        super().__init__()
+        self.questions = []
+
+    def __next__(self):
+        if self._current_question_index >= len(self.questions):
+            raise StopIteration
+        question = self.questions[self._current_question_index]
+        self._current_question_index += 1
+        return question
+
+    def add_question(self, question, convertor, retry):
+        self.questions.append((question, convertor, retry))
         return self
