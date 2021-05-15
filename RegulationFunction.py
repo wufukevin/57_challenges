@@ -19,11 +19,14 @@ def roundUp(num, dig):
     return math.ceil(num*digNum)/digNum
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 def isYesOrNo(ans):
     if ans =='y' or ans == 'y':
         return True
     return False
 
+=======
+>>>>>>> 49bd0061ee1a2a1d578d8e02efe28a483f185fda
 =======
 >>>>>>> 49bd0061ee1a2a1d578d8e02efe28a483f185fda
 def isFloat(numStr):
@@ -45,7 +48,11 @@ def isInteger(Parameter):
     if not isinteger:
         print('Please enter an integer!')
 <<<<<<< HEAD
+<<<<<<< HEAD
     return isinteger
+=======
+    return isinteger
+>>>>>>> 49bd0061ee1a2a1d578d8e02efe28a483f185fda
 =======
     return isinteger
 >>>>>>> 49bd0061ee1a2a1d578d8e02efe28a483f185fda
