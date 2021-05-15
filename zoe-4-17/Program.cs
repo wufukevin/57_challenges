@@ -6,46 +6,46 @@ namespace zoe_4_17
   {
     static void Main()
     {
-      // var weight = 0.0;
-      // var gender = ""; // F/M
-      // var volumn = 0.0;
-      // var hour = 0.0;
-
-      // BloodAlcoholCalculator Calculator = new(weight, hour, volumn, gender);
-
-      // var BAC = Calculator.GetBloodAlcoholContent();
-
-      // string[] femaleValues = {"f", "femal"};
-
       List<string> femaleValues = new();
-      femaleValues.Add("f");
-      femaleValues.Add("female");
+      femaleValues.Add("men");
+      femaleValues.Add("M");
 
       List<string> maleValues = new();
-      femaleValues.Add("m");
-      femaleValues.Add("male");
+      femaleValues.Add("Women");
+      femaleValues.Add("W");
 
       var genderOptions = new List<Option>(new Option[] {
-        new Option("F", acceptedValues: femaleValues),
-        new Option("M", acceptedValues: maleValues),
+        new Option("men", acceptedValues: femaleValues),
+        new Option("women", acceptedValues: maleValues),
       });
 
-      var chooseMode = new ChooseMode();
-      var gender = chooseMode.Ask(genderOptions, isPrintOption: false, question: "Gender ? (F/M) ");
+      // TODO:
+      // var weight = Input.Ask("weight? ").ToDouble().AddRule(value => value > 0).GetValue();
 
-      Console.WriteLine(gender);
+      var weight = Utils.AskForInputDouble("weight = ");
+      var gender = ChooseMode.Ask(genderOptions, isPrintOption: false, question: "Gender ? (men/women) ");
+      var volumn = Utils.AskForInputDouble("volumn = ");
+      var hour = Utils.AskForInputDouble("hour = ");
+
+      BloodAlcoholCalculator Calculator = new();
+
+      var param = new BloodAlcoholCalculatorParam()
+      {
+        Weight = weight,
+        Hour = hour,
+        Volumn = volumn,
+        Gender = gender
+      };
+
+      var UserBAC = Calculator.SetInfo(param);
+
+      var BAC = UserBAC.BAC;
+      var IsOverLimit = UserBAC.IsOverLimit;
+      var safeMassage = "It is legal for you to drive.";
+      var warningMessage = "It is not legal for you to drive.";
+
+      Console.WriteLine($"Yout BAC is {BAC}.");
+      Console.WriteLine(IsOverLimit ? warningMessage  : safeMassage);
     }
   }
-
-  // class InputMode
-  // {
-  //   public T Ask(string question)
-  //   {
-  //     Console.WriteLine(question);
-
-  //     string input = Console.ReadLine();
-
-  //     return input;
-  //   }
-  // }
 }

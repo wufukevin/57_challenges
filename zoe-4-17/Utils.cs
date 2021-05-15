@@ -7,7 +7,6 @@ namespace zoe_4_17
     public static double AskForInputDouble(string question)
     {
       ConsoleQuestion(question);
-
       string input = Console.ReadLine();
 
       try
@@ -25,14 +24,14 @@ namespace zoe_4_17
 
       // try
       // {
-      var input = Convert.ToInt32(Console.ReadLine());
+        var input = Convert.ToInt32(Console.ReadLine());
 
-      //   if (input < 0)
-      //   {
-      //     throw new AgeException();
-      //   }
+        // if (input < 0)
+        // {
+        //   throw new AgeException();
+        // }
 
-      return input;
+        return input;
       // }
       // catch
       // {

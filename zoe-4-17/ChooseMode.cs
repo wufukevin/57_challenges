@@ -5,9 +5,9 @@ namespace zoe_4_17
 {
   class ChooseMode
   {
-    private List<Option> Options;
+    private static List<Option> Options;
 
-    public string Ask(List<Option> options, string question = "please choise: ", bool isPrintOption = true)
+    public static string  Ask(List<Option> options, string question = "please choise: ", bool isPrintOption = true)
     {
       Options = options;
 
@@ -19,7 +19,7 @@ namespace zoe_4_17
       return InputToChoose(question);
     }
 
-    public string GetSelecectOptionValue(string inputValue)
+    public static string GetSelecectOptionValue(string inputValue)
     {
 
       try
@@ -42,7 +42,7 @@ namespace zoe_4_17
       }
     }
 
-    public string InputToChoose(string question)
+    public static string InputToChoose(string question)
     {
       string inputValue;
       string? value;
@@ -58,7 +58,7 @@ namespace zoe_4_17
     }
 
     // hint: use List no more Array
-    void PrintOptions()
+    static void PrintOptions()
     {
       Options.ForEach(option =>
       {

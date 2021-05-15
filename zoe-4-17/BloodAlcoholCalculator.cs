@@ -1,30 +1,41 @@
+using System;
 using System.Collections.Generic;
 
 namespace zoe_4_17
 {
-  public class BloodAlcoholCalculator
+  class BloodAlcoholCalculatorParam
   {
-    public double Weight, Hour, Volume;
+    public double Weight;
+    public double Hour;
+    public double Volumn;
     public string Gender;
+  }
+
+  class BloodAlcoholCalculator
+  {
+    private readonly double LegalLimit = 0.08;
+
+    public double BAC;
+    public bool IsOverLimit;
 
     readonly Dictionary<string, double> AlcoholDistributionRatio = new()
     {
-      { "M", 0.73 },
-      { "F", 0.66 }
+      { "men", 0.73 },
+      { "women", 0.66 }
     };
 
-    public BloodAlcoholCalculator(double weight, double hour, double volumn, string gender)
+    public BloodAlcoholCalculator SetInfo(BloodAlcoholCalculatorParam param)
     {
-      Weight = weight;
-      Hour = hour;
-      Gender = gender;
-      Volume = volumn;
+      BAC = GetBAC(param.Weight, param.Hour, param.Volumn, param.Gender);
+      IsOverLimit = BAC >= LegalLimit;
+
+      return this;
     }
 
-    public double GetBloodAlcoholContent()
+    private double GetBAC(double weight, double hour, double volumn, string gender)
     {
       // BAC = (Volume × 5.14 / weight × alcoholDistributionRatio) − 0.015 × hours
-      return (Volume * 5.14 / Weight * AlcoholDistributionRatio[Gender]) - 0.015 * Hour;
+      return (volumn * 5.14 / weight * AlcoholDistributionRatio[gender]) - 0.015 * hour;
     }
   }
 }
