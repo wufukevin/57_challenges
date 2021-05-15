@@ -18,11 +18,14 @@ def roundUp(num, dig):
     digNum = math.pow(10, dig)
     return math.ceil(num*digNum)/digNum
 
+<<<<<<< HEAD
 def isYesOrNo(ans):
     if ans =='y' or ans == 'y':
         return True
     return False
 
+=======
+>>>>>>> 49bd0061ee1a2a1d578d8e02efe28a483f185fda
 def isFloat(numStr):
     try:
         numFloat = float(numStr)
@@ -41,4 +44,8 @@ def isInteger(Parameter):
     isinteger = Parameter.isdigit() and float(Parameter)%1==0
     if not isinteger:
         print('Please enter an integer!')
+<<<<<<< HEAD
     return isinteger
+=======
+    return isinteger
+>>>>>>> 49bd0061ee1a2a1d578d8e02efe28a483f185fda

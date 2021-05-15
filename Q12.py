@@ -1,23 +1,17 @@
 import math
 import RegulationFunction as rf
 
-''' 無條件進位 dig :小數點後第幾位
-'''
 def roundUp(num, dig):
-    digNum = 1
-    for i in range(dig):
-        digNum *= 10
-    return(math.ceil(num*digNum)/float(digNum))
+    digNum = math.pow(10, dig)
+    return math.ceil(num*digNum)/digNum
 
 def isFloat(numStr):
-    flag = False
-    numStr = str(numStr).strip().lstrip('-').lstrip('+')
     try:
         numFloat = float(numStr)
-        flag = True
+        return True
     except Exception as ex:
         print("isFloat() - error: " + str(ex))
-    return flag
+    return False
 
 def isDigit(Parameter):
     try:
@@ -28,11 +22,11 @@ def isDigit(Parameter):
         return False
 
 def calculateSimpleInterest(rate, principal, year):
-    return(roundUp(principal*(1+rate*year/100), 1))
+    return(roundUp(principal*(100+rate*year)/100, 1))
 
 
 input_principal = rf.InputFunction('Enter the principal: ', 1, isDigit)
-input_rate = rf.InputFunction('nter the rate: ', 2, isFloat)
+input_rate = rf.InputFunction('Enter the rate: ', 2, isFloat)
 input_year = rf.InputFunction('Enter the number of years: ', 3, isDigit)
 
 principal = int(input_principal)

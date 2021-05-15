@@ -1,21 +1,24 @@
 import RegulationFunction as rf
 legalBloodAlcoholContent = 0.08
 def IsPostiveNum(Parameter):
+    isPostiveNum = True
     try:
         floatParameter = float(Parameter)
         if floatParameter <0:
             print('Please enter a postive number.')
-            return False
-        return True
+            isPositiveNum = False
     except Exception as ex :
         print('Please enter a number!')
-        return False
+        isPositiveNum = False
 
+    return isPositiveNum
+
+#  TODO: extract variable of the condition
 def correctGenderInput(Parameter):
-    if Parameter == '1' or Parameter == '2':
-        return True
-    print('Please choose the options.')
-    return False
+    correctgender = Parameter == '1' or Parameter == '2'
+    if not correctgender:
+        print('Please choose the options.')
+    return correctgender
 
 '''
 Blood Alcohol Content:
@@ -38,7 +41,8 @@ input_timeAfterLastDrink = rf.InputFunction('What is the amount of time since yo
 
 totalAlcohol = float(input_numberOfDrink)*float(input_alcoholInDrink)
 weight = float(input_weight)
-if input_gender == '1':
+isMan = input_gender == '1'
+if isMan:
     alcoholDistributionRatio = 0.73
 else:
     alcoholDistributionRatio = 0.66
