@@ -1,0 +1,3 @@
+root = None
+inputwidgetList = []
+inputList = []

@@ -1,35 +1,73 @@
-# 引入套件
+# 1. 匯入模組與類別
 import tkinter as tk
+from tkinter import messagebox as mb
+from tkinter import simpledialog as sd
 
-# 建立主視窗和 Frame（把元件變成群組的容器）
-window = tk.Tk()
-top_frame = tk.Frame(window)
+import variable as v
 
-# 將元件分為 top/bottom 兩群並加入主視窗
-top_frame.pack()
-bottom_frame = tk.Frame(window)
-bottom_frame.pack(side=tk.BOTTOM)
 
-# 建立事件處理函式（event handler），透過元件 command 參數存取
-def echo_hello():
-    print('hello world :)')
+# 2. 定義元件之事件處理函數
 
-# 以下為 top 群組
-left_button = tk.Button(top_frame, text='Red', fg='red')
-# 讓系統自動擺放元件，預設為由上而下（靠左）
-left_button.pack(side=tk.LEFT)
 
-middle_button = tk.Button(top_frame, text='Green', fg='green')
-middle_button.pack(side=tk.LEFT)
+def event_handler():
+    mb.showinfo("Info", "Hello World!")
 
-right_button = tk.Button(top_frame, text='Blue', fg='blue')
-right_button.pack(side=tk.LEFT)
 
-# 以下為 bottom 群組
-# bottom_button 綁定 echo_hello 事件處理，點擊該按鈕會印出 hello world :)
-bottom_button = tk.Button(bottom_frame, text='Black', fg='black', command=echo_hello)
-# 讓系統自動擺放元件（靠下方）
-bottom_button.pack(side=tk.BOTTOM)
+def do_askstring():
+    str_input = sd.askstring("askstring", "請輸入姓名")
+    print("{} {}".format(str_input, type(str_input)))
 
-# 運行主程式
-window.mainloop()
+
+def do_askinteger():
+    int_input = sd.askinteger("askinteger", "請輸入年齡", minvalue=0, maxvalue=120)
+    print("{} {}".format(int_input, type(int_input)))
+
+
+def do_askfloat():
+    float_input = sd.askfloat("askfloat", "請輸入體重", initialvalue=50.0)
+    print("{} {}".format(float_input, type(float_input)))
+
+
+# 3. 建立最上層視窗, 設定標題與大小
+def initial(title='ttk GUI'):
+    v.root = tk.Tk()
+    v.root.title(title)
+    v.root.geometry("400x300")
+
+
+def createInputWidget(question=''):
+    tk.Label(v.root, text=question).pack()
+    temp = tk.Entry(v.root)
+    v.inputwidgetList.append(temp)
+    temp.pack()
+
+
+def runMainFunction(movieRecommendation):
+    def _runMainFunction():
+        v.inputList = []
+        for widget in v.inputwidgetList:
+            value = widget.get()
+            v.inputList.append(value)
+        if movieRecommendation is not None:
+            movieRecommendation.searchRequest(*v.inputList)
+            movieRecommendation.showSearchResult()
+    return _runMainFunction
+
+
+def loop(movieRecommendation):
+    tk.Button(v.root, text='Run the program !!!', command=runMainFunction(movieRecommendation)).pack()
+    v.root.mainloop()
+
+
+# 4. 加入 tk/ttk 元件並指定事件處理函數
+# sd.askstring('a','b')
+# ttk.Button(root, text="askstring", command=do_askstring).pack()
+# ttk.Button(root, text="askinteger", command=do_askinteger).pack()
+# ttk.Button(root, text="askfloat", command=do_askfloat).pack()
+# for i in range(3):
+#     ttk.Button(root, text="OK", command=event_handler).pack()
+
+# 5. 啟始事件迴圈顯示視窗
+if __name__ == '__main__':
+    initial()
+    loop()

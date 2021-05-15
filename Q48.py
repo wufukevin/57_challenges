@@ -26,7 +26,7 @@ class CityWeather(object):
         self.wind = weather_data['wind']['deg']
 
     def _convert_time(self, time):
-        return time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time))
+        return time.strftime("%Y-%m-%d %H:%M:%S", time.servertime(time))
 
     def get_sunrise_time(self):
         return self._convert_time(self.sunrise)

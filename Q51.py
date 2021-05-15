@@ -38,8 +38,6 @@ firebase_admin.initialize_app(cred)
 
 # 初始化firestore
 db = firestore.client()
-
-doc_path = "/notes/note_01"
 # 透過路徑，產生參考
 doc_ref = db.collection('notes')
 

@@ -1,15 +1,8 @@
-from datetime import datetime
 import hashlib
 from flask import Flask, jsonify, request, redirect, render_template
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import firestore
-
-# cred = credentials.Certificate('/Users/kshskevin/57_challenges/challenge-q51-firebase-adminsdk-f34xu-0a07380a60.json')
-# firebase_admin.initialize_app(cred)
-# db = firestore.client()
-# doc_ref = db.collection('Q54')
-
 
 serverIP = 'http://127.0.0.1:5000'
 app = Flask(__name__)

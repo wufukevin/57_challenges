@@ -17,10 +17,10 @@ class ToDoList:
             '/Users/kshskevin/57_challenges/challenge-q51-firebase-adminsdk-f34xu-0a07380a60.json')
         firebase_admin.initialize_app(cred)
         self.db = firestore.client()
-        self.doc_ref = self.db.collection('Q53')
+        self.docRef = self.db.collection('Q53')
 
     def showData(self):
-        for doc in self.doc_ref.stream():
+        for doc in self.docRef.stream():
             data = doc.to_dict()
             print(data['noteContent'] + f'           (docID : {doc.id}')
 
@@ -29,11 +29,11 @@ class ToDoList:
             'noteContent': savedNote,
             'saveTime': time.time()
         }
-        self.doc_ref.add(doc)
+        self.docRef.add(doc)
         print('Your note was saved.')
 
     def deleteData(self, docID):
-        self.doc_ref.document(docID).delete()
+        self.docRef.document(docID).delete()
         print('Your note was deleted.')
 
     def whatToDo(self, instruction):
