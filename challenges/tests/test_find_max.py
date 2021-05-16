@@ -27,8 +27,8 @@ def given_find_max_object():
 class TestFindMax(unittest.TestCase):
     @patch('builtins.input')
     def test_find_max(self, mock_input):
-        infinite_questioner = given_infinite_questioner(generate_question(3))
-        given_answers(mock_input, ['10', '20', 'n'])
+        infinite_questioner = given_infinite_questioner(generate_question(4))
+        given_answers(mock_input, ['10', '20', 'n', '30'])
         find_max = given_find_max_object()
         max_of_inputs = when_find_from_infinite_questioner(find_max, infinite_questioner)
         self.max_of_input_should_be(max_of_inputs, 20)

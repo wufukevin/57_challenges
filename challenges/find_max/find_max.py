@@ -16,6 +16,8 @@ class InputDistinctInt:
                 raise DuplicatedInputNumberError()
             self.number_set.add(input_number)
             return input_number
+        except DuplicatedInputNumberError as duplicate:
+            raise duplicate
         except Exception:
             raise StopIteration
 
@@ -25,6 +27,7 @@ def generate_question(question_count):
     count = 1
     while count <= question_count:
         yield f'Enter number {count}: ', input_distinct_int, True
+        count += 1
 
 
 class FindMax:
