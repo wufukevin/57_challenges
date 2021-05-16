@@ -59,14 +59,6 @@ class Questioner:
         return self
 
 
-class NotSupportedError(Exception):
-    def __init__(self, name):
-        self.name = name
-
-    def __str__(self):
-        return f'{self.name} is not supported'
-
-
 class QuestionIterator:
     def __init__(self):
         self._current_question_index = 0
