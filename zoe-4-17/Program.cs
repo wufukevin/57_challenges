@@ -20,7 +20,9 @@ namespace zoe_4_17
       });
 
       // TODO:
-      // var weight = Input.Ask("weight? ").ToDouble().AddRule(value => value > 0).GetValue();
+      // var weight = Input.Ask("weight? ").AddRule<double>(value => value > 0).ToDouble().start();
+      // lazy computation
+      // Builder  
 
       var weight = Utils.AskForInputDouble("weight = ");
       var gender = ChooseMode.Ask(genderOptions, isPrintOption: false, question: "Gender ? (men/women) ");
@@ -48,4 +50,6 @@ namespace zoe_4_17
       Console.WriteLine(IsOverLimit ? warningMessage  : safeMassage);
     }
   }
+
+  
 }
